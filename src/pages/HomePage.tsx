@@ -8,9 +8,9 @@ import {
   Card,
   Form
 } from "react-bootstrap";
-import { Note, Tag } from "./App";
+import { Note, Tag } from "../App";
 import { Navigate, useNavigate, Link } from "react-router-dom";
-import NotesList from "./NotesList";
+import NotesList from "../components/NotesList";
 import { FormEvent, useState } from "react";
 
 type HomePageProps = {

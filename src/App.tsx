@@ -3,14 +3,16 @@ import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-import NewNote from "./NewNote";
-import { useLocalStorage } from "./useLocalStorage";
+import NewNote from "./pages/NewNote";
+import { useLocalStorage } from "./utilities/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
-import HomePage from "./HomePage";
-import { Container } from "react-bootstrap";
-import NotesWithTags from "./NotesWithTags";
-import Note from "./Note";
-import EditNote from "./EditNote";
+import HomePage from "./pages/HomePage";
+import { Col, Container, Row, Stack } from "react-bootstrap";
+import NotesWithTags from "./utilities/NotesWithTags";
+import Note from "./pages/Note";
+import EditNote from "./pages/EditNote";
+import AppHeader from "./components/AppHeader";
+import AppMenu from "./components/AppMenu";
 
 export type NoteData = {
   title: string;
@@ -38,6 +40,7 @@ export type RawNoteData = {
 function App() {
   const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
+  const [showSideBar, setShowSideBar] = useState(false);
 
   const notesWithTags = useMemo(() => {
     return notes.map(note => {
@@ -93,45 +96,55 @@ function App() {
       })
     );
   }
+
   return (
     <Container className="my-4">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <HomePage
-              notes={notesWithTags}
-              availableTags={tags}
-              onEdit={editTag}
-              onDelete={deleteTag}
+      <AppHeader setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
+      <Stack direction="horizontal">
+        <AppMenu setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
+        <Col>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  notes={notesWithTags}
+                  availableTags={tags}
+                  onEdit={editTag}
+                  onDelete={deleteTag}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/new"
-          element={
-            <NewNote
-              onSubmit={onCreateNote}
-              onAddTag={addTag}
-              availableTags={tags}
+            <Route
+              path="/new"
+              element={
+                <NewNote
+                  onSubmit={onCreateNote}
+                  onAddTag={addTag}
+                  availableTags={tags}
+                />
+              }
             />
-          }
-        />
-        <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/:id" element={<NotesWithTags notes={notesWithTags} />}>
-          <Route index element={<Note onDelete={onDeleteNote} />} />
-          <Route
-            path="edit"
-            element={
-              <EditNote
-                onSubmit={onEditNote}
-                onAddTag={addTag}
-                availableTags={tags}
+            <Route path="*" element={<Navigate to="/" />} />
+            <Route
+              path="/:id"
+              element={<NotesWithTags notes={notesWithTags} />}
+            >
+              <Route index element={<Note onDelete={onDeleteNote} />} />
+              <Route
+                path="edit"
+                element={
+                  <EditNote
+                    onSubmit={onEditNote}
+                    onAddTag={addTag}
+                    availableTags={tags}
+                  />
+                }
               />
-            }
-          />
-        </Route>
-      </Routes>
+            </Route>
+          </Routes>
+        </Col>
+      </Stack>
     </Container>
   );
 }

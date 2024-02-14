@@ -8,7 +8,7 @@ import {
   Row,
   Stack
 } from "react-bootstrap";
-import { useNote } from "./NotesWithTags";
+import { useNote } from "../utilities/NotesWithTags";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import ReactMarkDown from "react-markdown";
 import { useState } from "react";
