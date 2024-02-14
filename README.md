@@ -1,4 +1,16 @@
-# Getting Started with Create React App
+# Basic Calendar App
+Just a typoescript project to learn the language 
+
+Goals: 
+- event creation system
+- event tagging system
+- calendar with events attached
+- Maybe a notification system but nobody want's desktop notifications
+Other possible goals:
+- integrate an auth system
+- integrate individual user storage
+- integrate a db
+- host somewhere online 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
