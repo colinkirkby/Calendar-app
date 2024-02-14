@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./custom.scss";
 import { Routes, Route, Navigate } from "react-router-dom";
-import NewNote from "./pages/NewNote";
+import NewNote from "./pages/NewEvent";
 import { useLocalStorage } from "./utilities/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 import HomePage from "./pages/HomePage";
@@ -13,11 +13,14 @@ import Note from "./pages/Note";
 import EditNote from "./pages/EditNote";
 import AppHeader from "./components/AppHeader";
 import AppMenu from "./components/AppMenu";
+import ViewAllPage from "./pages/ViewAllPage";
+import CalendarPage from "./pages/CalenderPage";
 
-export type NoteData = {
+export type EventData = {
   title: string;
   tags: Tag[];
   body: string;
+  date: Date | null;
 };
 export type Tag = {
   id: string;
@@ -25,20 +28,21 @@ export type Tag = {
 };
 export type Note = {
   id: string;
-} & NoteData;
+} & EventData;
 
-export type RawNote = {
+export type RawEvent = {
   id: string;
-} & RawNoteData;
+} & RawEventData;
 
-export type RawNoteData = {
+export type RawEventData = {
   title: string;
   body: string;
+  date: Date | null;
   tagIds: string[];
 };
 
 function App() {
-  const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", []);
+  const [notes, setNotes] = useLocalStorage<RawEvent[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
   const [showSideBar, setShowSideBar] = useState(false);
 
@@ -51,7 +55,7 @@ function App() {
     });
   }, [notes, tags]);
 
-  function onCreateNote({ tags, ...data }: NoteData) {
+  function onCreateNote({ tags, ...data }: EventData) {
     setNotes(prevNotes => {
       return [
         ...prevNotes,
@@ -60,7 +64,7 @@ function App() {
     });
   }
 
-  function onEditNote(id: string, { tags, ...data }: NoteData) {
+  function onEditNote(id: string, { tags, ...data }: EventData) {
     setNotes(prevNotes => {
       return prevNotes.map(note => {
         return note.id === id
@@ -99,15 +103,19 @@ function App() {
 
   return (
     <Container className="my-4">
-      <AppHeader setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
       <Stack direction="horizontal">
         <AppMenu setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
-        <Col>
+        <Stack gap={4}>
+          <AppHeader
+            setShowSideBar={setShowSideBar}
+            showSideBar={showSideBar}
+          />
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route
-              path="/"
+              path="/view"
               element={
-                <HomePage
+                <ViewAllPage
                   notes={notesWithTags}
                   availableTags={tags}
                   onEdit={editTag}
@@ -115,6 +123,7 @@ function App() {
                 />
               }
             />
+            <Route path="/calendar" element={<CalendarPage />} />
             <Route
               path="/new"
               element={
@@ -143,7 +152,7 @@ function App() {
               />
             </Route>
           </Routes>
-        </Col>
+        </Stack>
       </Stack>
     </Container>
   );

@@ -27,7 +27,7 @@ export default function Note({ onDelete }: NoteProps) {
 
   function handleDelete() {
     onDelete(note.id);
-    navigate("/");
+    navigate("/view");
   }
 
   return (
@@ -49,7 +49,7 @@ export default function Note({ onDelete }: NoteProps) {
             <Link to="edit">
               <Button variant="primary ">Edit</Button>
             </Link>
-            <Link to="..">
+            <Link to="/view">
               <Button type="button" variant="secondary">
                 Back
               </Button>

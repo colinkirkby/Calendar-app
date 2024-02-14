@@ -1,15 +1,16 @@
-import { Button, Col, Form, Row, Stack } from "react-bootstrap";
+import { Button, Col, Form, FormLabel, Row, Stack } from "react-bootstrap";
 import CreatableReactSelect from "react-select/creatable";
+import { SelectDatepicker } from "react-select-datepicker";
 import { Link, useNavigate } from "react-router-dom";
-import { FormEvent, useRef, useState } from "react";
-import { NoteData, Tag } from "../App";
+import { FormEvent, useRef, useState, useCallback, useEffect } from "react";
+import { EventData, Tag } from "../App";
 import { v4 as uuidV4 } from "uuid";
 
 type NoteFormProps = {
-  onSubmit: (data: NoteData) => void;
+  onSubmit: (data: EventData) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];
-} & Partial<NoteData>;
+} & Partial<EventData>;
 
 export default function NoteForm({
   onSubmit,
@@ -17,10 +18,16 @@ export default function NoteForm({
   availableTags,
   title = "",
   tags = [],
-  body = ""
+  body = "",
+  date = null
 }: NoteFormProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [newDate, setDate] = useState<Date | null>(date);
+  useEffect(() => {});
+  const onDateChange = useCallback((value: Date | null) => {
+    setDate(value);
+  }, []);
   const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
   const navigate = useNavigate();
 
@@ -29,9 +36,10 @@ export default function NoteForm({
     onSubmit({
       title: titleRef.current!.value,
       body: textAreaRef.current!.value,
-      tags: selectedTags
+      tags: selectedTags,
+      date: newDate
     });
-    navigate("..");
+    navigate("/view");
   }
 
   return (
@@ -74,21 +82,30 @@ export default function NoteForm({
             </Form.Group>
           </Col>
         </Row>
-        <Form.Group>
-          <Form.Label>body</Form.Label>
-          <Form.Control
-            ref={textAreaRef}
-            required
-            as="textarea"
-            rows={15}
-            defaultValue={body}
-          />
-        </Form.Group>
+        <Row>
+          <Form.Group>
+            <Form.Label>body</Form.Label>
+            <Form.Control
+              ref={textAreaRef}
+              required
+              as="textarea"
+              rows={15}
+              defaultValue={body}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Date</Form.Label>
+            <SelectDatepicker
+              selectedDate={newDate}
+              onDateChange={onDateChange}
+            />
+          </Form.Group>
+        </Row>
         <Stack direction="horizontal" gap={2} className="justify-end-content">
           <Button type="submit" variant="primary">
             Save
           </Button>
-          <Link to="..">
+          <Link to="/view">
             <Button type="button" variant="outline-secondary">
               cancel
             </Button>

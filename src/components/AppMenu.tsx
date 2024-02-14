@@ -1,5 +1,6 @@
-import SidebarMenu, { SidebarMenuBody } from "react-bootstrap-sidebar-menu";
+import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { BsMenuButton, BsCalendar, BsPencil } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 type MenuProps = {
   showSideBar: boolean;
@@ -8,28 +9,19 @@ type MenuProps = {
 
 export default function AppMenu({ showSideBar, setShowSideBar }: MenuProps) {
   return (
-    <SidebarMenu expand={showSideBar} expanded={showSideBar} className="w-40">
-      <SidebarMenu.Header>
-        <SidebarMenu.Toggle>
-          <BsMenuButton size={40} />
-        </SidebarMenu.Toggle>
-      </SidebarMenu.Header>
-      <SidebarMenu.Body>
-        <SidebarMenu.Nav>
-          <SidebarMenu.Nav.Link>
-            <SidebarMenu.Nav.Icon>
-              <BsPencil size={40} />
-            </SidebarMenu.Nav.Icon>
-            <SidebarMenu.Nav.Title>Events</SidebarMenu.Nav.Title>
-          </SidebarMenu.Nav.Link>
-          <SidebarMenu.Nav.Link>
-            <SidebarMenu.Nav.Icon>
-              <BsCalendar size={40} />
-            </SidebarMenu.Nav.Icon>
-            <SidebarMenu.Nav.Title>Calender</SidebarMenu.Nav.Title>
-          </SidebarMenu.Nav.Link>
-        </SidebarMenu.Nav>
-      </SidebarMenu.Body>
-    </SidebarMenu>
+    <Sidebar
+      onBackdropClick={() => setShowSideBar(false)}
+      toggled={showSideBar}
+      breakPoint="always"
+    >
+      <Menu>
+        <MenuItem component={<Link to="/" />}> Home </MenuItem>
+        <SubMenu label="Events">
+          <MenuItem component={<Link to="/view" />}> View All </MenuItem>
+          <MenuItem component={<Link to="/new" />}> New Event </MenuItem>
+        </SubMenu>
+        <MenuItem component={<Link to="/calendar" />}> Calendar </MenuItem>
+      </Menu>
+    </Sidebar>
   );
 }

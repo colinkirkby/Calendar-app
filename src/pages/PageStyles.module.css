@@ -3,10 +3,11 @@
     ease-in-out 100ms;
     text-decoration: none !important;
 }
+
 .card:hover,
 
 
 .card:focus{
     translate: 0 -5px;
-    box-shadow: 0 5px 8px 0 rgb(119, 119, 119);
+    box-shadow: 0 5px 8px 0 rgb(133, 133, 133);
 }

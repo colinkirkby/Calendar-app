@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import NoteForm from "../components/NoteForm";
-import { NoteData, Tag } from "../App";
+import NoteForm from "../components/EventForm";
+import { EventData, Tag } from "../App";
 import { useNote } from "../utilities/NotesWithTags";
 
 type EditNoteProps = {
-  onSubmit: (id: string, data: NoteData) => void;
+  onSubmit: (id: string, data: EventData) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];
 };
@@ -17,7 +17,7 @@ export default function EditNote({
   const note = useNote();
   return (
     <>
-      <h1 className="mb-4"> Edit Note</h1>
+      <h1 className="mb-4"> Edit Event</h1>
       <NoteForm
         title={note.title}
         body={note.body}
