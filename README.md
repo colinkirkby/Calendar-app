@@ -6,6 +6,9 @@ Goals:
 - event tagging system
 - calendar with events attached
 - Maybe a notification system but nobody want's desktop notifications
+
+
+
 Other possible goals:
 - integrate an auth system
 - integrate individual user storage
