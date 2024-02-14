@@ -1,5 +1,5 @@
 import { Button, Container, Row, Stack } from "react-bootstrap";
-import { BsCalendar } from "react-icons/bs";
+import { BsMenuButtonWide } from "react-icons/bs";
 import styles from "./AppHeader.module.css";
 type HeaderProps = {
   showSideBar: boolean;
@@ -18,7 +18,7 @@ export default function AppHeader({
               setShowSideBar(true);
             }}
           >
-            <BsCalendar size={30} />
+            <BsMenuButtonWide size={40} />
           </Button>
           <span>
             <h1>Calendar</h1>

@@ -102,8 +102,15 @@ function App() {
   }
 
   return (
-    <Container className="my-4">
-      <Stack direction="horizontal">
+    <Container
+      className="my-4"
+      style={{
+        backgroundColor: "#EDF5E1",
+        borderRadius: "20px",
+        padding: "10px 10px 200px 10px"
+      }}
+    >
+      <Stack direction="horizontal" style={{}}>
         <AppMenu setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
         <Stack gap={4}>
           <AppHeader

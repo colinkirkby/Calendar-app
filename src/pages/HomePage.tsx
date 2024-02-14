@@ -10,24 +10,25 @@ export default function HomePage() {
         direction="horizontal"
         gap={4}
       >
-        <Link to={"/calendar"}>
-          <Card
-            className={`h-100 text-reset text-decoration-none ${styles.card}`}
-          >
-            <Card.Body>
-              <h1>Calendar</h1>
-            </Card.Body>
-          </Card>
-        </Link>
-        <Link to={"/view"}>
-          <Card
-            className={`h-100 text-reset text-decoration-none ${styles.card}`}
-          >
-            <Card.Body>
-              <h1>Events</h1>
-            </Card.Body>
-          </Card>
-        </Link>
+        <Card
+          as={Link}
+          to="/calendar"
+          className={`h-100 text-reset text-decoration-none ${styles.card}`}
+        >
+          <Card.Body>
+            <h1>Calendar</h1>
+          </Card.Body>
+        </Card>
+
+        <Card
+          as={Link}
+          to="/view"
+          className={`h-100 text-reset text-decoration-none ${styles.card}`}
+        >
+          <Card.Body>
+            <h1>Events</h1>
+          </Card.Body>
+        </Card>
       </Stack>
     </Container>
   );
