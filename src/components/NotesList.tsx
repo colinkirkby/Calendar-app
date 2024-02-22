@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { Badge, Card, Col, Container, Form, Row, Stack } from "react-bootstrap";
-import ReactSelect from "react-select";
+import { Col, Container, Form, Row } from "react-bootstrap";
+import ReactSelect, { SingleValue } from "react-select";
 import Select from "react-select";
 import { Note, Tag } from "../App";
-import { Link } from "react-router-dom";
-import styles from "./NotesListCards.module.css";
 import { isValidDateValue } from "@testing-library/user-event/dist/utils";
-type SimplifiedNote = {
+import { NoteCard } from "./NoteCard.1";
+export type SimplifiedNote = {
   tags: Tag[];
   title: string;
   id: string;
@@ -24,13 +23,22 @@ function getEnumKeys<
   return Object.keys(enumVariable) as Array<T>;
 }
 
-export default function EventsList({ availableTags, notes }: EventsListProps) {
-  const sorter = ["Date", "Name", "None"];
+export default function EventsList({
+  availableTags,
+  notes: events
+}: EventsListProps) {
+  const sorterOptions = [
+    { value: "Recent", label: "Recent" },
+    { value: "Date", label: "Date" },
+    { value: "Title", label: "Title" }
+  ];
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [title, setTitle] = useState("");
-  const [sort, setSort] = useState("None");
-  const filteredNotes = useMemo(() => {
-    return notes.filter(note => {
+  const [sort, setSort] = useState(sorterOptions[0]);
+  const [originalOrder, setOriginalOrder] = useState(events);
+  const filteredEvents = useMemo(() => {
+    console.log(events);
+    let filtered = events.filter(note => {
       return (
         (title === "" ||
           note.title.toLowerCase().includes(title.toLowerCase())) &&
@@ -40,7 +48,35 @@ export default function EventsList({ availableTags, notes }: EventsListProps) {
           ))
       );
     });
-  }, [title, selectedTags, notes]);
+    let sorted = filtered;
+    if (sort.label === "Date") {
+      sorted = filtered.sort((a, b) => {
+        const dateA = a.date ? new Date(a.date).getTime() : -Infinity; // Consider null as the earliest possible date
+        const dateB = b.date ? new Date(b.date).getTime() : -Infinity;
+
+        if (dateA > dateB) return -1;
+        if (dateA < dateB) return 1;
+        return 0;
+      });
+    } else if (sort.label === "Title") {
+      sorted = filtered.sort((a, b) => {
+        return a.title.localeCompare(b.title);
+      });
+    } else if (sort.label === "Recent") {
+      sorted = filtered.sort((a, b) => {
+        const dateA = a.created;
+        const dateB = b.created;
+
+        if (dateA > dateB) return -1;
+        if (dateA < dateB) return 1;
+        return 0;
+      });
+    }
+    return sorted;
+  }, [title, selectedTags, events, sort]);
+  useEffect(() => {
+    setOriginalOrder(events);
+  }, [events]);
 
   return (
     <Container className="mb-4">
@@ -82,18 +118,33 @@ export default function EventsList({ availableTags, notes }: EventsListProps) {
                 />
               </Form.Group>
             </Col>
-            {/*  <Col>
-              <Form.Group controlId="sort">
-                <Form.Label>Sort</Form.Label>
-                <Select value={sort} options={sorter} />
-              </Form.Group>
-            </Col>
-                */}
+            {
+              <Col>
+                <Form.Group controlId="sort">
+                  <Form.Label>Sort</Form.Label>
+                  <Select
+                    value={sort}
+                    options={sorterOptions}
+                    onChange={selectedOption => {
+                      if (selectedOption !== null) {
+                        setSort(selectedOption);
+                      } else {
+                        setSort(
+                          sorterOptions.find(
+                            option => option.value === "None"
+                          ) || sorterOptions[0]
+                        );
+                      }
+                    }}
+                  />
+                </Form.Group>
+              </Col>
+            }
           </Row>
         </Form>
       </Row>
       <Row className="g-3" xs={1} sm={2} lg={3}>
-        {filteredNotes.map(note => {
+        {filteredEvents.map(note => {
           return (
             <Col key={note.id}>
               <NoteCard
@@ -107,41 +158,5 @@ export default function EventsList({ availableTags, notes }: EventsListProps) {
         })}
       </Row>
     </Container>
-  );
-}
-
-function NoteCard({ id, title, tags, date }: SimplifiedNote) {
-  return (
-    <Card
-      as={Link}
-      to={`/${id}`}
-      className={`h-100 text-reset text-decoration-none ${styles.card}`}
-    >
-      <Card.Body>
-        <Stack
-          gap={2}
-          className="align-items-center justify-content-center h-100"
-        >
-          {/*date !== null && (
-            <Badge className="text-truncate">{date.toLocaleDateString()}</Badge>
-          )*/}
-          <span className="fs-5">{title}</span>
-          {tags.length > 0 && (
-            <Stack
-              gap={1}
-              className="justify-content-center flex-wrap"
-              direction="horizontal"
-            >
-              {" "}
-              {tags.map(tag => (
-                <Badge key={tag.id} className="text-truncate">
-                  {tag.label}
-                </Badge>
-              ))}
-            </Stack>
-          )}
-        </Stack>
-      </Card.Body>
-    </Card>
   );
 }

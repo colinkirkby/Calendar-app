@@ -37,7 +37,8 @@ export default function NoteForm({
       title: titleRef.current!.value,
       body: textAreaRef.current!.value,
       tags: selectedTags,
-      date: newDate
+      date: newDate,
+      created: Date.now()
     });
     navigate("/view");
   }

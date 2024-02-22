@@ -84,15 +84,15 @@ function EditTagsModel({
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete Note</Modal.Title>
+        <Modal.Title>Edit Tags</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container className="mb-4 align-items-center justify-content-center">
-          <Stack
-            gap={2}
-            className="mb-4 align-items-center justify-content-center"
-          >
-            <Form>
+          <Form>
+            <Stack
+              gap={2}
+              className="mb-4 align-items-center justify-content-center"
+            >
               {availableTags.map(tag => (
                 <Row key={tag.id}>
                   <Stack direction="horizontal" gap={2}>
@@ -107,8 +107,8 @@ function EditTagsModel({
                   </Stack>
                 </Row>
               ))}
-            </Form>
-          </Stack>
+            </Stack>
+          </Form>
         </Container>
       </Modal.Body>
     </Modal>

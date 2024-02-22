@@ -4,7 +4,10 @@ import "./App.css";
 import "./custom.scss";
 import { Routes, Route, Navigate } from "react-router-dom";
 import NewNote from "./pages/NewEvent";
-import { useLocalStorage } from "./utilities/useLocalStorage";
+import {
+  useLocalStorage,
+  useLocalStorageNotes
+} from "./utilities/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 import HomePage from "./pages/HomePage";
 import { Col, Container, Row, Stack } from "react-bootstrap";
@@ -21,6 +24,7 @@ export type EventData = {
   tags: Tag[];
   body: string;
   date: Date | null;
+  created: number;
 };
 export type Tag = {
   id: string;
@@ -38,11 +42,12 @@ export type RawEventData = {
   title: string;
   body: string;
   date: Date | null;
+  created: number;
   tagIds: string[];
 };
 
 function App() {
-  const [notes, setNotes] = useLocalStorage<RawEvent[]>("NOTES", []);
+  const [notes, setNotes] = useLocalStorageNotes<RawEvent[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
   const [showSideBar, setShowSideBar] = useState(false);
 
@@ -105,7 +110,6 @@ function App() {
     <Container
       className="my-4"
       style={{
-        backgroundColor: "#EDF5E1",
         borderRadius: "20px",
         padding: "10px 10px 200px 10px"
       }}
