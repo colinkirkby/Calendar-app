@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { RawEvent } from "../App";
+import dayjs from "dayjs";
 
 export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
   const [value, setValue] = useState<T>(() => {
@@ -36,7 +37,7 @@ export function useLocalStorageNotes<T>(
       let rawEvents = JSON.parse(jsonValue);
       const parsedEvents = rawEvents.map((event: any) => ({
         ...event,
-        date: event.date ? new Date(event.date) : null
+        date: event.date ? dayjs(event.date) : null
       }));
       return parsedEvents;
     }

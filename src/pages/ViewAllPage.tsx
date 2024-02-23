@@ -1,17 +1,10 @@
-import {
-  Container,
-  Row,
-  Stack,
-  Col,
-  Button,
-  Modal,
-  Card,
-  Form
-} from "react-bootstrap";
 import { Note, Tag } from "../App";
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import EventsList from "../components/NotesList";
 import { FormEvent, useState } from "react";
+import Layout from "antd/es/layout";
+import { Content } from "antd/es/layout/layout";
+import { Row, Col, Flex, Button, Modal, Input, Form } from "antd";
 
 type ViewPageProps = {
   notes: Note[];
@@ -35,40 +28,45 @@ export default function ViewAllPage({
 }: ViewPageProps) {
   const [showEditTagsModel, setShowEditTags] = useState(false);
   return (
-    <>
-      <Row className="allign-items-center">
-        <Col>
-          <h1>Events</h1>
-        </Col>
-        <Col xs="auto">
-          <Stack gap={2} direction="horizontal">
+    <Layout>
+      <Content style={{ padding: "0px 48px" }}>
+        <Row
+          gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+          style={{ alignItems: "center" }}
+        >
+          <Col flex={7}>
+            <h1>Events</h1>
+          </Col>
+          <Col>
             <Link to="/new">
-              <Button variant="primary">New Event</Button>
+              <Button type="primary">New Event</Button>
             </Link>
+          </Col>
+          <Col>
             <Button
               onClick={() => {
                 setShowEditTags(true);
               }}
-              variant="outline-secondary"
+              type="default"
             >
               Edit Tags
             </Button>
-          </Stack>
-        </Col>
-      </Row>
-      <Row>
-        <EventsList availableTags={availableTags} notes={notes} />
-      </Row>
-      <EditTagsModel
-        show={showEditTagsModel}
-        handleClose={() => {
-          setShowEditTags(false);
-        }}
-        availableTags={availableTags}
-        onDelete={onDelete}
-        handleChange={handleChange}
-      />
-    </>
+          </Col>
+        </Row>
+        <Row style={{ minWidth: "85vw" }}>
+          <EventsList availableTags={availableTags} notes={notes} />
+        </Row>
+        <EditTagsModel
+          show={showEditTagsModel}
+          handleClose={() => {
+            setShowEditTags(false);
+          }}
+          availableTags={availableTags}
+          onDelete={onDelete}
+          handleChange={handleChange}
+        />
+      </Content>
+    </Layout>
   );
   function handleChange(label: string, id: string) {
     onEdit(id, label);
@@ -82,35 +80,35 @@ function EditTagsModel({
   handleChange
 }: ModalProps) {
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Edit Tags</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Container className="mb-4 align-items-center justify-content-center">
-          <Form>
-            <Stack
-              gap={2}
-              className="mb-4 align-items-center justify-content-center"
-            >
-              {availableTags.map(tag => (
-                <Row key={tag.id}>
-                  <Stack direction="horizontal" gap={2}>
-                    <Form.Control
-                      type="text"
-                      value={tag.label}
-                      onChange={e => handleChange(e.target.value, tag.id)}
-                    />
-                    <Button variant="danger" onClick={() => onDelete(tag.id)}>
-                      X
-                    </Button>
-                  </Stack>
-                </Row>
-              ))}
-            </Stack>
-          </Form>
-        </Container>
-      </Modal.Body>
+    <Modal
+      open={show}
+      onOk={handleClose}
+      onCancel={handleClose}
+      title="EditTags"
+      footer={<Button onClick={handleClose}>close</Button>}
+    >
+      <Form>
+        <Flex
+          gap={10}
+          className="mb-4 align-items-center justify-content-center"
+          vertical
+        >
+          {availableTags.map(tag => (
+            <Row key={tag.id}>
+              <Flex gap={10} style={{ minWidth: "450px" }}>
+                <Input
+                  type="text"
+                  value={tag.label}
+                  onChange={e => handleChange(e.target.value, tag.id)}
+                />
+                <Button danger onClick={() => onDelete(tag.id)}>
+                  X
+                </Button>
+              </Flex>
+            </Row>
+          ))}
+        </Flex>
+      </Form>
     </Modal>
   );
 }

@@ -1,15 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
-import { Col, Container, Form, Row } from "react-bootstrap";
+
 import ReactSelect, { SingleValue } from "react-select";
 import Select from "react-select";
 import { Note, Tag } from "../App";
 import { isValidDateValue } from "@testing-library/user-event/dist/utils";
 import { NoteCard } from "./NoteCard.1";
+import { Layout, Form, Row, Col, Input, Space, Flex } from "antd";
+import dayjs from "dayjs";
+import { Content } from "antd/es/layout/layout";
 export type SimplifiedNote = {
   tags: Tag[];
   title: string;
   id: string;
-  date: Date | null;
+  date: dayjs.Dayjs;
 };
 type EventsListProps = {
   availableTags: Tag[];
@@ -51,12 +54,7 @@ export default function EventsList({
     let sorted = filtered;
     if (sort.label === "Date") {
       sorted = filtered.sort((a, b) => {
-        const dateA = a.date ? new Date(a.date).getTime() : -Infinity; // Consider null as the earliest possible date
-        const dateB = b.date ? new Date(b.date).getTime() : -Infinity;
-
-        if (dateA > dateB) return -1;
-        if (dateA < dateB) return 1;
-        return 0;
+        return a.date.diff(b.date);
       });
     } else if (sort.label === "Title") {
       sorted = filtered.sort((a, b) => {
@@ -79,24 +77,34 @@ export default function EventsList({
   }, [events]);
 
   return (
-    <Container className="mb-4">
-      <Row>
+    <Layout className="mb-4">
+      <Content>
         <Form>
-          <Row className="mb-4">
-            <Col>
-              <Form.Group controlId="title">
-                <Form.Label>Title</Form.Label>
-                <Form.Control
+          <Row
+            className="mb-4"
+            gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+            justify="end"
+          >
+            <Col flex="auto">
+              <Form.Item
+                name="title"
+                label="Title"
+                style={{ minWidth: "35vh", maxWidth: "35vh" }}
+              >
+                <Input
                   type="text"
                   onChange={e => {
                     setTitle(e.target.value);
                   }}
                 />
-              </Form.Group>
+              </Form.Item>
             </Col>
-            <Col>
-              <Form.Group controlId="tags">
-                <Form.Label>Tags</Form.Label>
+            <Col flex={4}>
+              <Form.Item
+                name="tags"
+                label="Tags"
+                style={{ minWidth: "35vh", maxWidth: "35vh" }}
+              >
                 <ReactSelect
                   value={selectedTags.map(tag => {
                     return { label: tag.label, value: tag.id };
@@ -116,47 +124,47 @@ export default function EventsList({
                   }}
                   isMulti
                 />
-              </Form.Group>
+              </Form.Item>
             </Col>
-            {
-              <Col>
-                <Form.Group controlId="sort">
-                  <Form.Label>Sort</Form.Label>
-                  <Select
-                    value={sort}
-                    options={sorterOptions}
-                    onChange={selectedOption => {
-                      if (selectedOption !== null) {
-                        setSort(selectedOption);
-                      } else {
-                        setSort(
-                          sorterOptions.find(
-                            option => option.value === "None"
-                          ) || sorterOptions[0]
-                        );
-                      }
-                    }}
-                  />
-                </Form.Group>
-              </Col>
-            }
+
+            <Col flex={2}>
+              <Form.Item
+                name="sort"
+                label="Sort"
+                style={{ minWidth: "20vh", maxWidth: "20vh" }}
+              >
+                <Select
+                  value={sort}
+                  options={sorterOptions}
+                  onChange={selectedOption => {
+                    if (selectedOption !== null) {
+                      setSort(selectedOption);
+                    } else {
+                      setSort(
+                        sorterOptions.find(option => option.value === "None") ||
+                          sorterOptions[0]
+                      );
+                    }
+                  }}
+                />
+              </Form.Item>
+            </Col>
           </Row>
         </Form>
-      </Row>
-      <Row className="g-3" xs={1} sm={2} lg={3}>
-        {filteredEvents.map(note => {
-          return (
-            <Col key={note.id}>
+
+        <Flex gap="middle" wrap="wrap">
+          {filteredEvents.map(note => {
+            return (
               <NoteCard
                 id={note.id}
                 title={note.title}
                 tags={note.tags}
                 date={note.date}
               />
-            </Col>
-          );
-        })}
-      </Row>
-    </Container>
+            );
+          })}
+        </Flex>
+      </Content>
+    </Layout>
   );
 }

@@ -10,3 +10,7 @@
     translate: 0 -5px;
     box-shadow: 0 5px 8px 0 rgb(119, 119, 119);
 }
+.datePicker{
+    padding-block: 10px;
+    border-radius: 5px;
+}

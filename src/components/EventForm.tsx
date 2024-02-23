@@ -1,11 +1,12 @@
 import { Button, Col, Form, FormLabel, Row, Stack } from "react-bootstrap";
 import CreatableReactSelect from "react-select/creatable";
-import { SelectDatepicker } from "react-select-datepicker";
+import { DatePicker } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { FormEvent, useRef, useState, useCallback, useEffect } from "react";
 import { EventData, Tag } from "../App";
 import { v4 as uuidV4 } from "uuid";
-
+import styles from "./NotesListCards.module.css";
+import dayjs from "dayjs";
 type NoteFormProps = {
   onSubmit: (data: EventData) => void;
   onAddTag: (tag: Tag) => void;
@@ -19,13 +20,16 @@ export default function NoteForm({
   title = "",
   tags = [],
   body = "",
-  date = null
+  date = dayjs()
 }: NoteFormProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [newDate, setDate] = useState<Date | null>(date);
-  useEffect(() => {});
-  const onDateChange = useCallback((value: Date | null) => {
+  const [newDate, setDate] = useState<dayjs.Dayjs>(date);
+  useEffect(() => {
+    console.log(date);
+  });
+
+  const onDateChange = useCallback((value: dayjs.Dayjs) => {
     setDate(value);
   }, []);
   const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
@@ -95,10 +99,15 @@ export default function NoteForm({
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Date</Form.Label>
-            <SelectDatepicker
-              selectedDate={newDate}
-              onDateChange={onDateChange}
+            <Row>
+              <Form.Label>Date</Form.Label>
+            </Row>
+            <DatePicker
+              className={styles.datePicker}
+              defaultValue={date}
+              value={newDate}
+              onChange={onDateChange}
+              required
             />
           </Form.Group>
         </Row>

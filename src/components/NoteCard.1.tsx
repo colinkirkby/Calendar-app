@@ -1,40 +1,36 @@
-import { Badge, Card, Stack } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Stack } from "react-bootstrap";
+import Card from "antd/es/card/Card";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import styles from "./NotesListCards.module.css";
 import { SimplifiedNote } from "./NotesList";
+import { Flex, Badge, Button, Tag } from "antd";
 
 export function NoteCard({ id, title, tags, date }: SimplifiedNote) {
+  const navigate = useNavigate();
   return (
     <Card
-      as={Link}
-      to={`/${id}`}
-      className={`h-100 text-reset text-decoration-none ${styles.card}`}
+      style={{ width: 300, height: 200 }}
+      title={title}
+      hoverable
+      onClick={() => {
+        navigate(`/${id}`);
+      }}
+      extra={
+        <Tag className="text-truncate" color="blue">
+          {date.format("DD/MM/YYYY").toString()}
+        </Tag>
+      }
     >
-      <Card.Body>
-        <Stack
-          gap={2}
-          className="align-items-center justify-content-center h-100"
-        >
-          {date !== null && (
-            <Badge className="text-truncate">{date.toLocaleDateString()}</Badge>
-          )}
-          <span className="fs-5">{title}</span>
-          {tags.length > 0 && (
-            <Stack
-              gap={1}
-              className="justify-content-center flex-wrap"
-              direction="horizontal"
-            >
-              {" "}
-              {tags.map(tag => (
-                <Badge key={tag.id} className="text-truncate">
-                  {tag.label}
-                </Badge>
-              ))}
-            </Stack>
-          )}
-        </Stack>
-      </Card.Body>
+      {tags.length > 0 && (
+        <Flex gap="small" wrap="wrap">
+          {" "}
+          {tags.map(tag => (
+            <Tag key={tag.id} className="text-truncate" color="orange">
+              {tag.label}
+            </Tag>
+          ))}
+        </Flex>
+      )}
     </Card>
   );
 }

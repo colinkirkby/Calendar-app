@@ -10,7 +10,7 @@ import {
 } from "./utilities/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 import HomePage from "./pages/HomePage";
-import { Col, Container, Row, Stack } from "react-bootstrap";
+import { Col, Layout, Row, Flex } from "antd";
 import NotesWithTags from "./utilities/NotesWithTags";
 import Note from "./pages/Note";
 import EditNote from "./pages/EditNote";
@@ -18,12 +18,13 @@ import AppHeader from "./components/AppHeader";
 import AppMenu from "./components/AppMenu";
 import ViewAllPage from "./pages/ViewAllPage";
 import CalendarPage from "./pages/CalenderPage";
+import dayjs from "dayjs";
 
 export type EventData = {
   title: string;
   tags: Tag[];
   body: string;
-  date: Date | null;
+  date: dayjs.Dayjs;
   created: number;
 };
 export type Tag = {
@@ -41,7 +42,7 @@ export type RawEvent = {
 export type RawEventData = {
   title: string;
   body: string;
-  date: Date | null;
+  date: dayjs.Dayjs;
   created: number;
   tagIds: string[];
 };
@@ -107,16 +108,10 @@ function App() {
   }
 
   return (
-    <Container
-      className="my-4"
-      style={{
-        borderRadius: "20px",
-        padding: "10px 10px 200px 10px"
-      }}
-    >
-      <Stack direction="horizontal" style={{}}>
+    <Flex gap="middle" wrap="wrap">
+      <Layout>
         <AppMenu setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
-        <Stack gap={4}>
+        <Flex gap={4} vertical>
           <AppHeader
             setShowSideBar={setShowSideBar}
             showSideBar={showSideBar}
@@ -163,9 +158,9 @@ function App() {
               />
             </Route>
           </Routes>
-        </Stack>
-      </Stack>
-    </Container>
+        </Flex>
+      </Layout>
+    </Flex>
   );
 }
 
