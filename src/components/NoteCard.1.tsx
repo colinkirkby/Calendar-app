@@ -16,7 +16,7 @@ export function NoteCard({ id, title, tags, date }: SimplifiedNote) {
         navigate(`/${id}`);
       }}
       extra={
-        <Tag className="text-truncate" color="blue">
+        <Tag className="text-truncate" color="blue" bordered={false}>
           {date.format("DD/MM/YYYY").toString()}
         </Tag>
       }
@@ -25,7 +25,12 @@ export function NoteCard({ id, title, tags, date }: SimplifiedNote) {
         <Flex gap="small" wrap="wrap">
           {" "}
           {tags.map(tag => (
-            <Tag key={tag.id} className="text-truncate" color="orange">
+            <Tag
+              bordered={false}
+              key={tag.id}
+              className="text-truncate"
+              color="orange"
+            >
               {tag.label}
             </Tag>
           ))}

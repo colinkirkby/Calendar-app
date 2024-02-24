@@ -1,4 +1,4 @@
-import { Button, Col, Form, FormLabel, Row, Stack } from "react-bootstrap";
+import { Button, Col, Form, Row, Flex, Input, Layout } from "antd";
 import CreatableReactSelect from "react-select/creatable";
 import { DatePicker } from "antd";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,6 +7,8 @@ import { EventData, Tag } from "../App";
 import { v4 as uuidV4 } from "uuid";
 import styles from "./NotesListCards.module.css";
 import dayjs from "dayjs";
+import TextArea from "antd/es/input/TextArea";
+import { Content } from "antd/es/layout/layout";
 type NoteFormProps = {
   onSubmit: (data: EventData) => void;
   onAddTag: (tag: Tag) => void;
@@ -34,97 +36,124 @@ export default function NoteForm({
   }, []);
   const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
   const navigate = useNavigate();
-
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  const [form] = Form.useForm();
+  function handleSubmit(values: FieldType) {
     onSubmit({
-      title: titleRef.current!.value,
-      body: textAreaRef.current!.value,
+      title: values.title,
+      body: values.body,
       tags: selectedTags,
       date: newDate,
       created: Date.now()
     });
     navigate("/view");
   }
+  const onReset = () => {
+    form.resetFields();
+  };
+  type FieldType = {
+    title: string;
+    body: string;
+    date: dayjs.Dayjs;
+    tags: Tag[];
+  };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Stack gap={4}>
-        <Row>
-          <Col>
-            <Form.Group controlId=" title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control ref={titleRef} required defaultValue={title} />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="tags">
-              <Form.Label>Tags</Form.Label>
-              <CreatableReactSelect
-                value={selectedTags.map(tag => {
-                  return { label: tag.label, value: tag.id };
-                })}
-                onCreateOption={(label: any) => {
-                  const newTag = { id: uuidV4(), label };
-                  onAddTag(newTag);
-                  setSelectedTags(prevTags => [...prevTags, newTag]);
-                }}
-                options={availableTags.map(tag => {
-                  return {
-                    label: tag.label,
-                    value: tag.id
-                  };
-                })}
-                onChange={tags => {
-                  setSelectedTags(
-                    tags.map(tag => {
-                      return { label: tag.label, id: tag.value };
-                    })
-                  );
-                }}
-                isMulti
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Form.Group>
-            <Form.Label>body</Form.Label>
-            <Form.Control
-              ref={textAreaRef}
-              required
-              as="textarea"
-              rows={15}
-              defaultValue={body}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Row>
-              <Form.Label>Date</Form.Label>
-            </Row>
-            <DatePicker
-              className={styles.datePicker}
-              defaultValue={date}
-              value={newDate}
-              onChange={onDateChange}
-              required
-            />
-          </Form.Group>
-        </Row>
-        <Stack direction="horizontal" gap={2} className="justify-end-content">
-          <Button type="submit" variant="primary">
-            Save
-          </Button>
-          <Link to="/view">
-            <Button type="button" variant="outline-secondary">
-              cancel
+    <Content style={{ padding: "10px 10px" }}>
+      <Form onFinish={handleSubmit} form={form} initialValues={date}>
+        <Flex gap="middle" vertical>
+          <Row gutter={20}>
+            <Col flex={5}>
+              <Form.Item<FieldType>
+                name="title"
+                label="Title"
+                initialValue={title}
+                rules={[{ required: true, message: "Please input Title" }]}
+              >
+                <Input required defaultValue={title} />
+              </Form.Item>
+            </Col>
+            <Col flex={5}>
+              <Form.Item name="tags" label="Tags" initialValue={selectedTags}>
+                <CreatableReactSelect
+                  value={selectedTags.map(tag => {
+                    return { label: tag.label, value: tag.id };
+                  })}
+                  onCreateOption={(label: any) => {
+                    const newTag = { id: uuidV4(), label };
+                    onAddTag(newTag);
+                    setSelectedTags(prevTags => [...prevTags, newTag]);
+                  }}
+                  options={availableTags.map(tag => {
+                    return {
+                      label: tag.label,
+                      value: tag.id
+                    };
+                  })}
+                  onChange={tags => {
+                    setSelectedTags(
+                      tags.map(tag => {
+                        return { label: tag.label, id: tag.value };
+                      })
+                    );
+                  }}
+                  isMulti
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={20}>
+            <Col flex={25}>
+              <Form.Item<FieldType>
+                name="body"
+                label="Body"
+                rules={[{ required: true, message: "Please input Title" }]}
+                initialValue={body}
+              >
+                <TextArea
+                  rows={15}
+                  ref={textAreaRef}
+                  required
+                  defaultValue={body}
+                />
+              </Form.Item>
+            </Col>
+            <Col flex={2}>
+              <Form.Item<FieldType>
+                label="date"
+                name="date"
+                rules={[{ required: true, message: "Please input Date" }]}
+                initialValue={date}
+              >
+                <DatePicker
+                  className={styles.datePicker}
+                  value={newDate}
+                  defaultValue={date}
+                  onChange={onDateChange}
+                  required
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Flex gap="middle" justify="end" className="justify-end-content">
+            <Button htmlType="submit" type="primary">
+              Save
             </Button>
-          </Link>
-          <Button type="reset" variant="outline-secondary">
-            Clear
-          </Button>
-        </Stack>
-      </Stack>
-    </Form>
+            <Link to="/view">
+              <Button type="default">cancel</Button>
+            </Link>
+            <Button
+              type="primary"
+              danger
+              htmlType="button"
+              onClick={() => {
+                onReset();
+              }}
+            >
+              Clear
+            </Button>
+          </Flex>
+        </Flex>
+      </Form>
+    </Content>
   );
 }

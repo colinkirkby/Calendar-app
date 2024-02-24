@@ -2,6 +2,7 @@ import { Flex, Layout, Row, Button } from "antd";
 import { BsMenuButtonWide } from "react-icons/bs";
 import styles from "./AppHeader.module.css";
 import { Header } from "antd/es/layout/layout";
+import { Link } from "react-router-dom";
 
 const headerStyle: React.CSSProperties = {
   textAlign: "center",
@@ -30,16 +31,15 @@ export default function AppHeader({
           align="start"
           style={{ justifyContent: "center", alignItems: "center" }}
         >
-          <Button
-            style={{ minWidth: "70px", minHeight: "70px" }}
-            shape="circle"
-            type="primary"
-            size="large"
-            onClick={() => {
-              setShowSideBar(true);
-            }}
-            icon={<BsMenuButtonWide size={40} />}
-          ></Button>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Button
+              style={{ minWidth: "70px", minHeight: "70px" }}
+              type="primary"
+              size="large"
+              onClick={() => {}}
+              icon={<BsMenuButtonWide size={40} />}
+            ></Button>
+          </Link>
           <span>
             <h1>Calendar</h1>
           </span>

@@ -29,7 +29,7 @@ export default function ViewAllPage({
   const [showEditTagsModel, setShowEditTags] = useState(false);
   return (
     <Layout>
-      <Content style={{ padding: "0px 48px" }}>
+      <Content style={{ padding: "20px 48px" }}>
         <Row
           gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
           style={{ alignItems: "center" }}
@@ -53,7 +53,7 @@ export default function ViewAllPage({
             </Button>
           </Col>
         </Row>
-        <Row style={{ minWidth: "85vw" }}>
+        <Row>
           <EventsList availableTags={availableTags} notes={notes} />
         </Row>
         <EditTagsModel

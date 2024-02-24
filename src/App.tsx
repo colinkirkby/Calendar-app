@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import "./custom.scss";
@@ -10,7 +10,7 @@ import {
 } from "./utilities/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 import HomePage from "./pages/HomePage";
-import { Col, Layout, Row, Flex } from "antd";
+import { Col, Layout, Row, Flex, Space } from "antd";
 import NotesWithTags from "./utilities/NotesWithTags";
 import Note from "./pages/Note";
 import EditNote from "./pages/EditNote";
@@ -19,6 +19,7 @@ import AppMenu from "./components/AppMenu";
 import ViewAllPage from "./pages/ViewAllPage";
 import CalendarPage from "./pages/CalenderPage";
 import dayjs from "dayjs";
+import { Content } from "antd/es/layout/layout";
 
 export type EventData = {
   title: string;
@@ -51,6 +52,7 @@ function App() {
   const [notes, setNotes] = useLocalStorageNotes<RawEvent[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
   const [showSideBar, setShowSideBar] = useState(false);
+  const isMobile = window?.screen?.width < 600;
 
   const notesWithTags = useMemo(() => {
     return notes.map(note => {
@@ -110,55 +112,66 @@ function App() {
   return (
     <Flex gap="middle" wrap="wrap">
       <Layout>
-        <AppMenu setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
-        <Flex gap={4} vertical>
-          <AppHeader
-            setShowSideBar={setShowSideBar}
-            showSideBar={showSideBar}
-          />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route
-              path="/view"
-              element={
-                <ViewAllPage
-                  notes={notesWithTags}
-                  availableTags={tags}
-                  onEdit={editTag}
-                  onDelete={deleteTag}
-                />
-              }
+        <AppHeader setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
+        <Row gutter={5} style={{ flexWrap: "nowrap" }}>
+          {!isMobile && (
+            <AppMenu
+              setShowSideBar={setShowSideBar}
+              showSideBar={showSideBar}
             />
-            <Route path="/calendar" element={<CalendarPage />} />
-            <Route
-              path="/new"
-              element={
-                <NewNote
-                  onSubmit={onCreateNote}
-                  onAddTag={addTag}
-                  availableTags={tags}
-                />
-              }
-            />
-            <Route path="*" element={<Navigate to="/" />} />
-            <Route
-              path="/:id"
-              element={<NotesWithTags notes={notesWithTags} />}
-            >
-              <Route index element={<Note onDelete={onDeleteNote} />} />
+          )}
+          <Content
+            style={{
+              marginInline: "auto",
+              justifyContent: "center",
+              display: "flex"
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<HomePage />} />
               <Route
-                path="edit"
+                path="/view"
                 element={
-                  <EditNote
-                    onSubmit={onEditNote}
+                  <ViewAllPage
+                    notes={notesWithTags}
+                    availableTags={tags}
+                    onEdit={editTag}
+                    onDelete={deleteTag}
+                  />
+                }
+              />
+              <Route path="/calendar" element={<CalendarPage />} />
+              <Route
+                path="/new"
+                element={
+                  <NewNote
+                    onSubmit={onCreateNote}
                     onAddTag={addTag}
                     availableTags={tags}
                   />
                 }
               />
-            </Route>
-          </Routes>
-        </Flex>
+              <Route path="*" element={<Navigate to="/" />} />
+              <Route
+                path="/:id"
+                element={<NotesWithTags notes={notesWithTags} />}
+              >
+                <Route index element={<Note onDelete={onDeleteNote} />} />
+                <Route
+                  path="edit"
+                  element={
+                    <EditNote
+                      onSubmit={onEditNote}
+                      onAddTag={addTag}
+                      availableTags={tags}
+                    />
+                  }
+                />
+              </Route>
+            </Routes>
+          </Content>
+          {!isMobile && <div style={{ width: 256 }}></div>}
+        </Row>
       </Layout>
     </Flex>
   );
