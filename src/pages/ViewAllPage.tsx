@@ -28,45 +28,43 @@ export default function ViewAllPage({
 }: ViewPageProps) {
   const [showEditTagsModel, setShowEditTags] = useState(false);
   return (
-    <Layout>
-      <Content style={{ padding: "20px 48px" }}>
-        <Row
-          gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-          style={{ alignItems: "center" }}
-        >
-          <Col flex={7}>
-            <h1>Events</h1>
-          </Col>
-          <Col>
-            <Link to="/new">
-              <Button type="primary">New Event</Button>
-            </Link>
-          </Col>
-          <Col>
-            <Button
-              onClick={() => {
-                setShowEditTags(true);
-              }}
-              type="default"
-            >
-              Edit Tags
-            </Button>
-          </Col>
-        </Row>
-        <Row>
-          <EventsList availableTags={availableTags} notes={notes} />
-        </Row>
-        <EditTagsModel
-          show={showEditTagsModel}
-          handleClose={() => {
-            setShowEditTags(false);
-          }}
-          availableTags={availableTags}
-          onDelete={onDelete}
-          handleChange={handleChange}
-        />
-      </Content>
-    </Layout>
+    <Content style={{ padding: "20px 48px" }}>
+      <Row
+        gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+        style={{ alignItems: "center" }}
+      >
+        <Col flex={7}>
+          <h1>Events</h1>
+        </Col>
+        <Col>
+          <Link to="/new">
+            <Button type="primary">New Event</Button>
+          </Link>
+        </Col>
+        <Col>
+          <Button
+            onClick={() => {
+              setShowEditTags(true);
+            }}
+            type="default"
+          >
+            Edit Tags
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <EventsList availableTags={availableTags} notes={notes} />
+      </Row>
+      <EditTagsModel
+        show={showEditTagsModel}
+        handleClose={() => {
+          setShowEditTags(false);
+        }}
+        availableTags={availableTags}
+        onDelete={onDelete}
+        handleChange={handleChange}
+      />
+    </Content>
   );
   function handleChange(label: string, id: string) {
     onEdit(id, label);

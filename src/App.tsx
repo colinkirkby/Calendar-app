@@ -10,7 +10,7 @@ import {
 } from "./utilities/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 import HomePage from "./pages/HomePage";
-import { Col, Layout, Row, Flex, Space } from "antd";
+import { Col, Layout, Row, Flex, Space, ConfigProvider, theme } from "antd";
 import NotesWithTags from "./utilities/NotesWithTags";
 import Note from "./pages/Note";
 import EditNote from "./pages/EditNote";
@@ -19,6 +19,7 @@ import AppMenu from "./components/AppMenu";
 import ViewAllPage from "./pages/ViewAllPage";
 import CalendarPage from "./pages/CalenderPage";
 import dayjs from "dayjs";
+import { App as AntApp } from "antd";
 import { Content } from "antd/es/layout/layout";
 
 export type EventData = {
@@ -48,11 +49,31 @@ export type RawEventData = {
   tagIds: string[];
 };
 
+type ThemeData = {
+  borderRadius: number;
+  colorPrimary: string;
+  background: string;
+  Button?: {
+    colorPrimary: string;
+    algorithm?: boolean;
+  };
+};
+
+const defaultData: ThemeData = {
+  borderRadius: 6,
+  colorPrimary: "#1677ff",
+  background: "#ffffff",
+  Button: {
+    colorPrimary: "#00B96B"
+  }
+};
+
 function App() {
   const [notes, setNotes] = useLocalStorageNotes<RawEvent[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
   const [showSideBar, setShowSideBar] = useState(false);
   const isMobile = window?.screen?.width < 600;
+  const [data, setData] = React.useState<ThemeData>(defaultData);
 
   const notesWithTags = useMemo(() => {
     return notes.map(note => {
@@ -110,70 +131,82 @@ function App() {
   }
 
   return (
-    <Flex gap="middle" wrap="wrap">
-      <Layout>
-        <AppHeader setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
-        <Row gutter={5} style={{ flexWrap: "nowrap" }}>
-          {!isMobile && (
-            <AppMenu
+    <ConfigProvider
+      theme={{
+        algorithm: theme.defaultAlgorithm
+      }}
+    >
+      <AntApp>
+        <Flex gap="middle" wrap="wrap">
+          <Layout style={{ background: "#FFFFFFFF" }}>
+            <AppHeader
               setShowSideBar={setShowSideBar}
               showSideBar={showSideBar}
             />
-          )}
-          <Content
-            style={{
-              marginInline: "auto",
-              justifyContent: "center",
-              display: "flex"
-            }}
-          >
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route
-                path="/view"
-                element={
-                  <ViewAllPage
-                    notes={notesWithTags}
-                    availableTags={tags}
-                    onEdit={editTag}
-                    onDelete={deleteTag}
-                  />
-                }
-              />
-              <Route path="/calendar" element={<CalendarPage />} />
-              <Route
-                path="/new"
-                element={
-                  <NewNote
-                    onSubmit={onCreateNote}
-                    onAddTag={addTag}
-                    availableTags={tags}
-                  />
-                }
-              />
-              <Route path="*" element={<Navigate to="/" />} />
-              <Route
-                path="/:id"
-                element={<NotesWithTags notes={notesWithTags} />}
-              >
-                <Route index element={<Note onDelete={onDeleteNote} />} />
-                <Route
-                  path="edit"
-                  element={
-                    <EditNote
-                      onSubmit={onEditNote}
-                      onAddTag={addTag}
-                      availableTags={tags}
-                    />
-                  }
+            <Row gutter={5} style={{ flexWrap: "nowrap" }}>
+              {!isMobile && (
+                <AppMenu
+                  setShowSideBar={setShowSideBar}
+                  showSideBar={showSideBar}
                 />
-              </Route>
-            </Routes>
-          </Content>
-          {!isMobile && <div style={{ width: 256 }}></div>}
-        </Row>
-      </Layout>
-    </Flex>
+              )}
+              <Content
+                style={{
+                  marginInline: "auto",
+                  justifyContent: "center",
+                  display: "flex",
+                  maxWidth: "1431px"
+                }}
+              >
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route
+                    path="/view"
+                    element={
+                      <ViewAllPage
+                        notes={notesWithTags}
+                        availableTags={tags}
+                        onEdit={editTag}
+                        onDelete={deleteTag}
+                      />
+                    }
+                  />
+                  <Route path="/calendar" element={<CalendarPage />} />
+                  <Route
+                    path="/new"
+                    element={
+                      <NewNote
+                        onSubmit={onCreateNote}
+                        onAddTag={addTag}
+                        availableTags={tags}
+                      />
+                    }
+                  />
+                  <Route path="*" element={<Navigate to="/" />} />
+                  <Route
+                    path="/:id"
+                    element={<NotesWithTags notes={notesWithTags} />}
+                  >
+                    <Route index element={<Note onDelete={onDeleteNote} />} />
+                    <Route
+                      path="edit"
+                      element={
+                        <EditNote
+                          onSubmit={onEditNote}
+                          onAddTag={addTag}
+                          availableTags={tags}
+                        />
+                      }
+                    />
+                  </Route>
+                </Routes>
+              </Content>
+              {!isMobile && <div style={{ width: 256 }}></div>}
+            </Row>
+          </Layout>
+        </Flex>
+      </AntApp>
+    </ConfigProvider>
   );
 }
 

@@ -61,6 +61,7 @@ export default function AppMenu({ showSideBar, setShowSideBar }: MenuValProps) {
   return (
     <div style={{ minWidth: 256, maxWidth: 256, zIndex: 1000 }}>
       <Menu
+        mode="inline"
         style={{ borderRadius: 10 }}
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
