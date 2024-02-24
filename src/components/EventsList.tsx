@@ -2,9 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 
 import ReactSelect, { SingleValue } from "react-select";
 import Select from "react-select";
-import { Note, Tag } from "../App";
+import { CEvent, Tag } from "../App";
 import { isValidDateValue } from "@testing-library/user-event/dist/utils";
-import { NoteCard } from "./NoteCard.1";
+import { NoteCard } from "./EventCard";
 import { Layout, Form, Row, Col, Input, Space, Flex } from "antd";
 import dayjs from "dayjs";
 import { Content } from "antd/es/layout/layout";
@@ -16,7 +16,7 @@ export type SimplifiedNote = {
 };
 type EventsListProps = {
   availableTags: Tag[];
-  notes: Note[];
+  events: CEvent[];
 };
 
 function getEnumKeys<
@@ -25,10 +25,13 @@ function getEnumKeys<
 >(enumVariable: { [key in T]: TEnumValue }) {
   return Object.keys(enumVariable) as Array<T>;
 }
+export const dateSort = (a: CEvent, b: CEvent): number => {
+  return a.date.diff(b.date);
+};
 
 export default function EventsList({
   availableTags,
-  notes: events
+  events: events
 }: EventsListProps) {
   const sorterOptions = [
     { value: "Recent", label: "Recent" },
@@ -39,23 +42,22 @@ export default function EventsList({
   const [title, setTitle] = useState("");
   const [sort, setSort] = useState(sorterOptions[0]);
   const [originalOrder, setOriginalOrder] = useState(events);
+
   const filteredEvents = useMemo(() => {
     console.log(events);
-    let filtered = events.filter(note => {
+    let filtered = events.filter(event => {
       return (
         (title === "" ||
-          note.title.toLowerCase().includes(title.toLowerCase())) &&
+          event.title.toLowerCase().includes(title.toLowerCase())) &&
         (selectedTags.length === 0 ||
           selectedTags.every(tag =>
-            note.tags.some(noteTag => noteTag.id === tag.id)
+            event.tags.some(noteTag => noteTag.id === tag.id)
           ))
       );
     });
     let sorted = filtered;
     if (sort.label === "Date") {
-      sorted = filtered.sort((a, b) => {
-        return a.date.diff(b.date);
-      });
+      sorted = filtered.sort(dateSort);
     } else if (sort.label === "Title") {
       sorted = filtered.sort((a, b) => {
         return a.title.localeCompare(b.title);
@@ -152,13 +154,13 @@ export default function EventsList({
       </Form>
 
       <Flex gap="middle" wrap="wrap">
-        {filteredEvents.map(note => {
+        {filteredEvents.map(event => {
           return (
             <NoteCard
-              id={note.id}
-              title={note.title}
-              tags={note.tags}
-              date={note.date}
+              id={event.id}
+              title={event.title}
+              tags={event.tags}
+              date={event.date}
             />
           );
         })}

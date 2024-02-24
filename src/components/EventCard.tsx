@@ -2,7 +2,7 @@ import { Stack } from "react-bootstrap";
 import Card from "antd/es/card/Card";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import styles from "./NotesListCards.module.css";
-import { SimplifiedNote } from "./NotesList";
+import { SimplifiedNote } from "./EventsList";
 import { Flex, Badge, Button, Tag } from "antd";
 
 export function NoteCard({ id, title, tags, date }: SimplifiedNote) {

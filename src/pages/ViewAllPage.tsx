@@ -1,13 +1,13 @@
-import { Note, Tag } from "../App";
+import { CEvent, Tag } from "../App";
 import { Navigate, useNavigate, Link } from "react-router-dom";
-import EventsList from "../components/NotesList";
+import EventsList from "../components/EventsList";
 import { FormEvent, useState } from "react";
 import Layout from "antd/es/layout";
 import { Content } from "antd/es/layout/layout";
 import { Row, Col, Flex, Button, Modal, Input, Form } from "antd";
 
 type ViewPageProps = {
-  notes: Note[];
+  events: CEvent[];
   availableTags: Tag[];
   onEdit: (id: string, label: string) => void;
   onDelete: (id: string) => void;
@@ -21,7 +21,7 @@ type ModalProps = {
 };
 
 export default function ViewAllPage({
-  notes,
+  events,
   availableTags,
   onEdit,
   onDelete
@@ -53,7 +53,7 @@ export default function ViewAllPage({
         </Col>
       </Row>
       <Row>
-        <EventsList availableTags={availableTags} notes={notes} />
+        <EventsList availableTags={availableTags} events={events} />
       </Row>
       <EditTagsModel
         show={showEditTagsModel}

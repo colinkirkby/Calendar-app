@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormEvent, useRef, useState, useCallback, useEffect } from "react";
 import { EventData, Tag } from "../App";
 import { v4 as uuidV4 } from "uuid";
-import styles from "./NotesListCards.module.css";
+import styles from "./EventsListCards.module.css";
 import dayjs from "dayjs";
 import TextArea from "antd/es/input/TextArea";
 import { Content } from "antd/es/layout/layout";

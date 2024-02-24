@@ -33,7 +33,7 @@ export type Tag = {
   id: string;
   label: string;
 };
-export type Note = {
+export type CEvent = {
   id: string;
 } & EventData;
 
@@ -75,7 +75,7 @@ function App() {
   const isMobile = window?.screen?.width < 600;
   const [data, setData] = React.useState<ThemeData>(defaultData);
 
-  const notesWithTags = useMemo(() => {
+  const eventsWithTags = useMemo(() => {
     return notes.map(note => {
       return {
         ...note,
@@ -159,12 +159,21 @@ function App() {
                 }}
               >
                 <Routes>
-                  <Route path="/" element={<HomePage />} />
+                  <Route
+                    path="/"
+                    element={
+                      <HomePage
+                        events={eventsWithTags}
+                        onDelete={deleteTag}
+                        availableTags={tags}
+                      />
+                    }
+                  />
                   <Route
                     path="/view"
                     element={
                       <ViewAllPage
-                        notes={notesWithTags}
+                        events={eventsWithTags}
                         availableTags={tags}
                         onEdit={editTag}
                         onDelete={deleteTag}
@@ -185,7 +194,7 @@ function App() {
                   <Route path="*" element={<Navigate to="/" />} />
                   <Route
                     path="/:id"
-                    element={<NotesWithTags notes={notesWithTags} />}
+                    element={<NotesWithTags notes={eventsWithTags} />}
                   >
                     <Route index element={<Note onDelete={onDeleteNote} />} />
                     <Route

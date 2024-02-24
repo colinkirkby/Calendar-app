@@ -3,6 +3,7 @@ import { BsMenuButtonWide } from "react-icons/bs";
 import styles from "./AppHeader.module.css";
 import { Header } from "antd/es/layout/layout";
 import { Link } from "react-router-dom";
+import { HomeFilled, HomeOutlined } from "@ant-design/icons";
 
 const headerStyle: React.CSSProperties = {
   textAlign: "center",
@@ -33,11 +34,15 @@ export default function AppHeader({
         >
           <Link to="/" style={{ textDecoration: "none" }}>
             <Button
-              style={{ minWidth: "70px", minHeight: "70px" }}
+              style={{
+                minWidth: "70px",
+                minHeight: "70px",
+                marginLeft: "-35px"
+              }}
               type="primary"
               size="large"
               onClick={() => {}}
-              icon={<BsMenuButtonWide size={40} />}
+              icon={<HomeFilled style={{ fontSize: "200%" }} />}
             ></Button>
           </Link>
           <span>

@@ -1,12 +1,12 @@
 import { Navigate, Outlet, useOutletContext, useParams } from "react-router";
-import { Note } from "../App";
+import { CEvent } from "../App";
 
 type NoteLayoutProps = {
-  notes: Note[];
+  notes: CEvent[];
 };
 
 export function useNote() {
-  return useOutletContext<Note>();
+  return useOutletContext<CEvent>();
 }
 
 export default function NotesWithTags({ notes }: NoteLayoutProps) {
