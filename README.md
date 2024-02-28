@@ -1,5 +1,4 @@
 # Basic Calendar App
-Just a typescript project to learn the language 
 
 ![image](https://github.com/colinkirkby/Calendar-app/assets/78116947/ae598441-01e1-441a-b56a-dad6d313b6d8)
 
