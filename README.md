@@ -4,6 +4,9 @@ Just a typescript project to learn the language
 ![image](https://github.com/colinkirkby/Calendar-app/assets/78116947/ae598441-01e1-441a-b56a-dad6d313b6d8)
 
 
+![image](https://github.com/colinkirkby/Calendar-app/assets/78116947/385093fa-3841-46b4-9710-6c9f287cc92f)
+
+
 
 Goals: 
 - google calender integration 
