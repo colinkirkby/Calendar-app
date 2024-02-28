@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import NoteForm from "../components/EventForm";
+import NoteForm from "../components/Forms/EventForm";
 import { EventData, Tag } from "../App";
 import { Content } from "antd/es/layout/layout";
 

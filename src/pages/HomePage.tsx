@@ -19,10 +19,7 @@ export default function HomePage({
   return (
     <Content>
       <h1>Home</h1>
-      <Flex
-        className="flex-wrap justify-content-center align-items-center"
-        gap={4}
-      >
+      <Flex className="flex-wrap justify-content-center " gap={40}>
         <ThisWeek
           events={events}
           onDelete={onDelete}

@@ -2,9 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 
 import ReactSelect, { SingleValue } from "react-select";
 import Select from "react-select";
-import { CEvent, Tag } from "../App";
+import { CEvent, Tag } from "../../App";
 import { isValidDateValue } from "@testing-library/user-event/dist/utils";
-import { NoteCard } from "./EventCard";
+import { EventCard } from "./EventCard";
 import { Layout, Form, Row, Col, Input, Space, Flex } from "antd";
 import dayjs from "dayjs";
 import { Content } from "antd/es/layout/layout";
@@ -12,7 +12,8 @@ export type SimplifiedNote = {
   tags: Tag[];
   title: string;
   id: string;
-  date: dayjs.Dayjs;
+  startDate: dayjs.Dayjs;
+  endDate: dayjs.Dayjs;
 };
 type EventsListProps = {
   availableTags: Tag[];
@@ -26,7 +27,7 @@ function getEnumKeys<
   return Object.keys(enumVariable) as Array<T>;
 }
 export const dateSort = (a: CEvent, b: CEvent): number => {
-  return a.date.diff(b.date);
+  return a.startDate.diff(b.startDate);
 };
 
 export default function EventsList({
@@ -108,18 +109,23 @@ export default function EventsList({
             >
               <ReactSelect
                 value={selectedTags.map(tag => {
-                  return { label: tag.label, value: tag.id };
+                  return { label: tag.label, value: tag.id, color: tag.color };
                 })}
                 options={availableTags.map(tag => {
                   return {
                     label: tag.label,
-                    value: tag.id
+                    value: tag.id,
+                    color: tag.color
                   };
                 })}
                 onChange={tags => {
                   setSelectedTags(
                     tags.map(tag => {
-                      return { label: tag.label, id: tag.value };
+                      return {
+                        label: tag.label,
+                        id: tag.value,
+                        color: tag.color
+                      };
                     })
                   );
                 }}
@@ -154,13 +160,14 @@ export default function EventsList({
       </Form>
 
       <Flex gap="middle" wrap="wrap">
-        {filteredEvents.map(event => {
+        {filteredEvents.map(cEvent => {
           return (
-            <NoteCard
-              id={event.id}
-              title={event.title}
-              tags={event.tags}
-              date={event.date}
+            <EventCard
+              id={cEvent.id}
+              title={cEvent.title}
+              tags={cEvent.tags}
+              startDate={cEvent.startDate}
+              endDate={cEvent.endDate}
             />
           );
         })}

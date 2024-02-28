@@ -1,17 +1,10 @@
-import {
-  Badge,
-  Button,
-  Col,
-  Container,
-  Modal,
-  ModalBody,
-  Row,
-  Stack
-} from "react-bootstrap";
-import { useNote } from "../utilities/NotesWithTags";
+import { Badge, Button, Col, Modal, Row, Flex } from "antd";
+import { useEvent } from "../utilities/NotesWithTags";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import ReactMarkDown from "react-markdown";
 import { useState } from "react";
+import ColumnGroup from "antd/es/table/ColumnGroup";
+import { Content } from "antd/es/layout/layout";
 type NoteProps = {
   onDelete: (id: string) => void;
 };
@@ -22,7 +15,7 @@ type ModalProps = {
 
 export default function Note({ onDelete }: NoteProps) {
   const navigate = useNavigate();
-  const note = useNote();
+  const note = useEvent();
   const [showDelete, setShowDelete] = useState(false);
 
   function handleDelete() {
@@ -31,69 +24,66 @@ export default function Note({ onDelete }: NoteProps) {
   }
 
   return (
-    <>
+    <Content>
       <Row className="allign-items-center mb-4">
         <Col>
           <h1>{note.title}</h1>
-          <Stack gap={1} className=" flex-wrap" direction="horizontal">
+          <Flex gap={1} className=" flex-wrap">
             {" "}
             {note.tags.map(tag => (
               <Badge key={tag.id} className="text-truncate">
                 {tag.label}
               </Badge>
             ))}
-          </Stack>
+          </Flex>
         </Col>
         <Col xs="auto">
-          <Stack gap={3} direction="horizontal">
+          <Flex gap={3}>
             <Link to="edit">
-              <Button variant="primary ">Edit</Button>
+              <Button type="primary">Edit</Button>
             </Link>
-            <Link to="/view">
-              <Button type="button" variant="secondary">
-                Back
-              </Button>
+            <Link to={".."}>
+              <Button type="default">Back</Button>
             </Link>
 
-            <Button variant="danger" onClick={() => setShowDelete(true)}>
+            <Button danger onClick={() => setShowDelete(true)}>
               Delete
             </Button>
-          </Stack>
+          </Flex>
         </Col>
       </Row>
       <Row>
         <ReactMarkDown>{note.body}</ReactMarkDown>
       </Row>
       <DeleteModel show={showDelete} handleClose={() => setShowDelete(false)} />
-    </>
+    </Content>
   );
   function DeleteModel({ show, handleClose }: ModalProps) {
     return (
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title> Delete Note</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Container className="mb-4 align-items-center justify-content-center">
-            <p>Are You Sure You Want To Delete This Note</p>
-            <Stack
-              gap={2}
-              direction="horizontal"
-              className="mb-4 align-items-center justify-content-center"
+      <Modal
+        title="Delete Note"
+        open={show}
+        onOk={handleClose}
+        onCancel={handleClose}
+      >
+        <Col className="mb-4 align-items-center justify-content-center">
+          <p>Are You Sure You Want To Delete This Note</p>
+          <Flex
+            gap={2}
+            className="mb-4 align-items-center justify-content-center"
+          >
+            <Button danger onClick={handleDelete}>
+              Delete
+            </Button>
+            <Button
+              onClick={() => {
+                handleClose();
+              }}
             >
-              <Button variant="danger" onClick={handleDelete}>
-                Delete
-              </Button>
-              <Button
-                onClick={() => {
-                  handleClose();
-                }}
-              >
-                Cancel
-              </Button>
-            </Stack>
-          </Container>
-        </Modal.Body>
+              Cancel
+            </Button>
+          </Flex>
+        </Col>
       </Modal>
     );
   }

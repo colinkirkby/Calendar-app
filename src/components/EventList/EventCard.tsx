@@ -5,7 +5,13 @@ import styles from "./NotesListCards.module.css";
 import { SimplifiedNote } from "./EventsList";
 import { Flex, Badge, Button, Tag } from "antd";
 
-export function NoteCard({ id, title, tags, date }: SimplifiedNote) {
+export function EventCard({
+  id,
+  title,
+  tags,
+  startDate,
+  endDate
+}: SimplifiedNote) {
   const navigate = useNavigate();
   return (
     <Card
@@ -17,7 +23,9 @@ export function NoteCard({ id, title, tags, date }: SimplifiedNote) {
       }}
       extra={
         <Tag className="text-truncate" color="blue" bordered={false}>
-          {date.format("DD/MM/YYYY").toString()}
+          {startDate.format("DD/MM").toString()}
+          {!startDate.isSame(endDate) && " - "}
+          {!startDate.isSame(endDate) && endDate.format("DD/MM").toString()}
         </Tag>
       }
     >
@@ -29,7 +37,11 @@ export function NoteCard({ id, title, tags, date }: SimplifiedNote) {
               bordered={false}
               key={tag.id}
               className="text-truncate"
-              color="orange"
+              style={{
+                background: tag.color + "32",
+                color: tag.color,
+                borderColor: tag.color
+              }}
             >
               {tag.label}
             </Tag>

@@ -1,10 +1,11 @@
 import { CEvent, Tag } from "../App";
 import { Navigate, useNavigate, Link } from "react-router-dom";
-import EventsList from "../components/EventsList";
+import EventsList from "../components/EventList/EventsList";
 import { FormEvent, useState } from "react";
 import Layout from "antd/es/layout";
 import { Content } from "antd/es/layout/layout";
-import { Row, Col, Flex, Button, Modal, Input, Form } from "antd";
+import { Row, Col, Button } from "antd";
+import { EditTagsModel } from "../components/Tags/EditTagsModel";
 
 type ViewPageProps = {
   events: CEvent[];
@@ -12,7 +13,7 @@ type ViewPageProps = {
   onEdit: (id: string, label: string) => void;
   onDelete: (id: string) => void;
 };
-type ModalProps = {
+export type ModalProps = {
   show: boolean;
   handleClose: () => void;
   availableTags: Tag[];
@@ -69,44 +70,4 @@ export default function ViewAllPage({
   function handleChange(label: string, id: string) {
     onEdit(id, label);
   }
-}
-function EditTagsModel({
-  show,
-  handleClose,
-  availableTags,
-  onDelete,
-  handleChange
-}: ModalProps) {
-  return (
-    <Modal
-      open={show}
-      onOk={handleClose}
-      onCancel={handleClose}
-      title="EditTags"
-      footer={<Button onClick={handleClose}>close</Button>}
-    >
-      <Form>
-        <Flex
-          gap={10}
-          className="mb-4 align-items-center justify-content-center"
-          vertical
-        >
-          {availableTags.map(tag => (
-            <Row key={tag.id}>
-              <Flex gap={10} style={{ minWidth: "450px" }}>
-                <Input
-                  type="text"
-                  value={tag.label}
-                  onChange={e => handleChange(e.target.value, tag.id)}
-                />
-                <Button danger onClick={() => onDelete(tag.id)}>
-                  X
-                </Button>
-              </Flex>
-            </Row>
-          ))}
-        </Flex>
-      </Form>
-    </Modal>
-  );
 }

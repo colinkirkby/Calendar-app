@@ -11,11 +11,11 @@ import {
 import { v4 as uuidV4 } from "uuid";
 import HomePage from "./pages/HomePage";
 import { Col, Layout, Row, Flex, Space, ConfigProvider, theme } from "antd";
-import NotesWithTags from "./utilities/NotesWithTags";
+import CEventsWithTags from "./utilities/NotesWithTags";
 import Note from "./pages/Note";
 import EditNote from "./pages/EditNote";
-import AppHeader from "./components/AppHeader";
-import AppMenu from "./components/AppMenu";
+import AppHeader from "./components/Header/AppHeader";
+import AppMenu from "./components/Menus/AppMenu";
 import ViewAllPage from "./pages/ViewAllPage";
 import CalendarPage from "./pages/CalenderPage";
 import dayjs from "dayjs";
@@ -26,11 +26,18 @@ export type EventData = {
   title: string;
   tags: Tag[];
   body: string;
-  date: dayjs.Dayjs;
+  color: string;
+  startDate: dayjs.Dayjs;
+  endDate: dayjs.Dayjs;
+  startTime: dayjs.Dayjs;
+  endTime: dayjs.Dayjs;
   created: number;
+  isMulti: boolean;
+  renderIndex: number;
 };
 export type Tag = {
   id: string;
+  color: string;
   label: string;
 };
 export type CEvent = {
@@ -44,9 +51,15 @@ export type RawEvent = {
 export type RawEventData = {
   title: string;
   body: string;
-  date: dayjs.Dayjs;
+  color: string;
+  startDate: dayjs.Dayjs;
+  endDate: dayjs.Dayjs;
+  startTime: dayjs.Dayjs;
+  endTime: dayjs.Dayjs;
   created: number;
   tagIds: string[];
+  isMulti: boolean;
+  renderIndex: number;
 };
 
 type ThemeData = {
@@ -194,7 +207,7 @@ function App() {
                   <Route path="*" element={<Navigate to="/" />} />
                   <Route
                     path="/:id"
-                    element={<NotesWithTags notes={eventsWithTags} />}
+                    element={<CEventsWithTags cEvents={eventsWithTags} />}
                   >
                     <Route index element={<Note onDelete={onDeleteNote} />} />
                     <Route

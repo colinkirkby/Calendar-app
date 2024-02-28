@@ -1,0 +1,23 @@
+
+.first{
+    border-right-color: "#ffffff";
+    width: 125px
+}
+.middle{
+    margin-left: -25px;
+    overflow: "hidden";
+    border-radius: "0" !important;
+    width: 150px;
+    border-left-color: "#fafafa" !important;
+}
+.end{
+    border-left-color: "#fffffff";
+    margin-left: -25px;
+
+}
+.single{
+    
+    overflow: "hidden";
+    border-radius: "0" !important;
+   
+}

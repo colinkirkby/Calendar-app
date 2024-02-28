@@ -37,7 +37,10 @@ export function useLocalStorageNotes<T>(
       let rawEvents = JSON.parse(jsonValue);
       const parsedEvents = rawEvents.map((event: any) => ({
         ...event,
-        date: event.date ? dayjs(event.date) : null
+        startDate: event.startDate ? dayjs(event.startDate) : null,
+        endDate: event.endDate ? dayjs(event.endDate) : null,
+        startTime: event.startTime ? dayjs(event.startTime) : null,
+        endTime: event.endTime ? dayjs(event.endTime) : null
       }));
       return parsedEvents;
     }
