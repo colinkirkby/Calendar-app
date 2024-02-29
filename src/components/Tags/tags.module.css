@@ -7,10 +7,9 @@
 }
 .middle{
     margin-left: -26px;
-    overflow: "hidden";
-    border-radius: "0" !important;
+    
     width: 150px;
-    border-left-color: "#fafafa" !important;
+  
     height: 24px;
 }
 .end{
@@ -23,7 +22,6 @@
     width: 138px;
     margin-left: -20px;
     height: 24px;
-    overflow: "hidden";
-    border-radius: "0" !important;
+  
    
 }

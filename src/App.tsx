@@ -252,7 +252,12 @@ function App() {
                   path="/:id"
                   element={<CEventsWithTags cEvents={eventsWithTags} />}
                 >
-                  <Route index element={<Note onDelete={onDeleteNote} />} />
+                  <Route
+                    index
+                    element={
+                      <Note isMobile={isMobile} onDelete={onDeleteNote} />
+                    }
+                  />
                   <Route
                     path="edit"
                     element={

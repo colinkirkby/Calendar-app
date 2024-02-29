@@ -7,10 +7,17 @@ import {
   AppstoreOutlined,
   ContainerOutlined,
   DesktopOutlined,
+  HomeFilled,
+  HomeOutlined,
+  MailFilled,
   MailOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  PieChartOutlined
+  PieChartFilled,
+  PieChartOutlined,
+  PlusCircleFilled,
+  PlusOutlined,
+  ProductOutlined
 } from "@ant-design/icons";
 type MenuValProps = {
   showSideBar: boolean;
@@ -37,24 +44,33 @@ export default function AppMenu({ showSideBar, setShowSideBar }: MenuValProps) {
   }
   const items: MenuItem[] = [
     getItem(
+      <Link style={{ textDecoration: "none" }} to="/">
+        Home
+      </Link>,
+      "1",
+      <HomeOutlined />
+    ),
+    getItem(
       <Link style={{ textDecoration: "none" }} to="/calendar">
         Calendar
       </Link>,
-      "1",
+      "2",
       <PieChartOutlined />
     ),
-    getItem("Events", "sub1", <MailOutlined />, [
+    getItem("Events", "sub1", <MailFilled />, [
       getItem(
         <Link style={{ textDecoration: "none" }} to="/view">
           View All
         </Link>,
-        "2"
+        "3",
+        <ProductOutlined />
       ),
       getItem(
         <Link style={{ textDecoration: "none" }} to="/new">
           New Event
         </Link>,
-        "3"
+        "4",
+        <PlusOutlined />
       )
     ])
   ];

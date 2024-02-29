@@ -20,7 +20,6 @@ export default function HomePage({
 }: HomePageProps) {
   return (
     <Content>
-      <h1 style={{ marginLeft: "5px" }}>Home</h1>
       <Flex className="flex-wrap justify-content-center " gap={40}>
         <ThisWeek
           isMobile={isMobile}

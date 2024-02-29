@@ -1,4 +1,4 @@
-import { Badge, Button, Col, Modal, Row, Flex } from "antd";
+import { Tag, Button, Col, Modal, Row, Flex } from "antd";
 import { useEvent } from "../utilities/NotesWithTags";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import ReactMarkDown from "react-markdown";
@@ -7,13 +7,14 @@ import ColumnGroup from "antd/es/table/ColumnGroup";
 import { Content } from "antd/es/layout/layout";
 type NoteProps = {
   onDelete: (id: string) => void;
+  isMobile: boolean;
 };
 type ModalProps = {
   show: boolean;
   handleClose: () => void;
 };
 
-export default function Note({ onDelete }: NoteProps) {
+export default function Note({ onDelete, isMobile }: NoteProps) {
   const navigate = useNavigate();
   const note = useEvent();
   const [showDelete, setShowDelete] = useState(false);
@@ -24,21 +25,66 @@ export default function Note({ onDelete }: NoteProps) {
   }
 
   return (
-    <Content>
-      <Row className="allign-items-center mb-4">
+    <Content
+      style={{ marginTop: "20px", margin: "auto", justifyContent: "center" }}
+    >
+      <Row
+        className="allign-items-center mb-4"
+        justify={isMobile ? "center" : "space-between"}
+      >
         <Col>
           <h1>{note.title}</h1>
+          <Tag className="text-truncate" color="blue" bordered={false}>
+            {note.startDate.format("DD/MMMM/YYY").toString()}
+            {!note.startDate.isSame(note.endDate) && " - "}
+            {!note.startDate.isSame(note.endDate) &&
+              note.endDate.format("DD/MMMM/YYYY").toString()}
+          </Tag>
           <Flex gap={1} className=" flex-wrap">
             {" "}
-            {note.tags.map(tag => (
-              <Badge key={tag.id} className="text-truncate">
-                {tag.label}
-              </Badge>
-            ))}
+            {note.tags.map(tag => {
+              let backgroundTagColor = tag.color + "32";
+              return (
+                <Tag
+                  key={tag.id}
+                  className="text-truncate"
+                  bordered={false}
+                  style={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    color: tag.color,
+                    background: backgroundTagColor
+                  }}
+                >
+                  {tag.label}
+                </Tag>
+              );
+            })}
           </Flex>
+          <Row style={{ marginTop: "30px" }}>
+            <ReactMarkDown>{note.body}</ReactMarkDown>
+          </Row>
         </Col>
-        <Col xs="auto">
-          <Flex gap={3}>
+        {!isMobile && (
+          <Col xs="auto">
+            <Flex gap={20} vertical>
+              <Link to="edit">
+                <Button type="primary">Edit</Button>
+              </Link>
+              <Link to={".."}>
+                <Button type="default">Back</Button>
+              </Link>
+
+              <Button danger onClick={() => setShowDelete(true)}>
+                Delete
+              </Button>
+            </Flex>
+          </Col>
+        )}
+      </Row>
+      {isMobile && (
+        <Row justify={"center"}>
+          <Flex gap={20}>
             <Link to="edit">
               <Button type="primary">Edit</Button>
             </Link>
@@ -50,11 +96,9 @@ export default function Note({ onDelete }: NoteProps) {
               Delete
             </Button>
           </Flex>
-        </Col>
-      </Row>
-      <Row>
-        <ReactMarkDown>{note.body}</ReactMarkDown>
-      </Row>
+        </Row>
+      )}
+
       <DeleteModel show={showDelete} handleClose={() => setShowDelete(false)} />
     </Content>
   );

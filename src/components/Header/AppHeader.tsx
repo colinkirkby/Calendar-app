@@ -1,15 +1,16 @@
-import { Flex, Layout, Row, Button } from "antd";
+import { Flex, Layout, Row, Button, Image } from "antd";
 import { BsMenuButtonWide } from "react-icons/bs";
 import styles from "./AppHeader.module.css";
 import { Header } from "antd/es/layout/layout";
 import { Link } from "react-router-dom";
 import { HomeFilled, HomeOutlined } from "@ant-design/icons";
+import Icon from "@ant-design/icons/lib/components/Icon";
 
 const headerStyle: React.CSSProperties = {
   textAlign: "center",
   color: "#fff",
   height: 100,
-  paddingInline: 48,
+  paddingInline: 28,
   lineHeight: "64px",
   backgroundColor: "#4096ff",
   display: "flex",
@@ -32,21 +33,9 @@ export default function AppHeader({
           align="start"
           style={{ justifyContent: "center", alignItems: "center" }}
         >
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <Button
-              style={{
-                minWidth: "70px",
-                minHeight: "70px",
-                marginLeft: "-35px"
-              }}
-              type="primary"
-              size="large"
-              onClick={() => {}}
-              icon={<HomeFilled style={{ fontSize: "200%" }} />}
-            ></Button>
-          </Link>
+          <Image preview={false} width={70} height={70} src="/icon.png"></Image>
           <span>
-            <h1>Calendar</h1>
+            <h1 style={{ fontSize: "40px" }}>uFree</h1>
           </span>
         </Flex>
       </Header>

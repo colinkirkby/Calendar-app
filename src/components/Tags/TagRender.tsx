@@ -41,7 +41,7 @@ export default function TagRender({ day, isMobile, isWeekView }: tagProps) {
 
   const renderBoxes = mapEventsToRenderIndex(day.cEvents);
   return (
-    <Flex vertical gap={isMobile ? 2 : 5}>
+    <Flex vertical gap={isMobile ? 4 : 5}>
       {renderBoxes.length > 0 &&
         renderBoxes.map((cEvents, index) => {
           if (cEvents.length > 0) {
@@ -71,7 +71,9 @@ export default function TagRender({ day, isMobile, isWeekView }: tagProps) {
             );
           } else {
             return (
-              <div style={isMobile ? { height: "20px" } : { height: "24px" }} />
+              <div
+                style={isMobile ? { height: "20px" } : { height: "24.5px" }}
+              />
             );
           }
         })}
