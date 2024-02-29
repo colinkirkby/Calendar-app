@@ -109,7 +109,7 @@ export default function ThisWeek({
                   : day.date.format("ddd, DD MMM ").toString()
               }
             >
-              <TagRender day={day} isMobile={isMobile} />
+              <TagRender day={day} isMobile={isMobile} isWeekView={true} />
             </Card>
           );
         })}

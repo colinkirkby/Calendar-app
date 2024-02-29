@@ -96,6 +96,17 @@ const defaultData: ThemeData = {
     colorPrimary: "#00B96B"
   }
 };
+var style: React.CSSProperties = {
+  backgroundColor: "#F8F8F8",
+  borderTop: "1px solid #E7E7E7",
+  textAlign: "center",
+  padding: "20px",
+  position: "fixed",
+  left: "0",
+  bottom: "0",
+  height: "110px",
+  width: "100%"
+};
 
 function App() {
   const [notes, setNotes] = useLocalStorageNotes<RawEvent[]>("NOTES", []);
@@ -260,6 +271,7 @@ function App() {
         </Layout>
         {isMobile && (
           <>
+            <div style={{ ...style }}></div>
             <Link to={"/"}>
               <FloatButton
                 style={{ right: 45 + 90 + 90 + 90 }}

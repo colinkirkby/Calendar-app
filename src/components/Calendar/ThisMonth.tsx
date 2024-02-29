@@ -21,7 +21,7 @@ const desktopCalender: React.CSSProperties = {
   width: "1050"
 };
 const mobileCalender: React.CSSProperties = {
-  marginTop: "30px",
+  marginTop: "5px",
   width: "350"
 };
 
@@ -175,7 +175,7 @@ export default function ThisMonth({
                   : day.date.format("ddd, DD MMM ").toString()
               }
             >
-              <TagRender isMobile={isMobile} day={day} />
+              <TagRender isMobile={isMobile} day={day} isWeekView={false} />
             </Card>
           );
         })}

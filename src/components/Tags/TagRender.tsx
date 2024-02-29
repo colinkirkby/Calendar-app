@@ -6,6 +6,7 @@ import mobileStyles from "./tagsMobile.module.css";
 type tagProps = {
   isMobile: boolean;
   day: DayWithEvents;
+  isWeekView: boolean;
 };
 
 import { Link } from "react-router-dom";
@@ -35,7 +36,7 @@ function mapEventsToRenderIndex(cEvents: CEvent[]): CEvent[][] {
   return indexedEvents;
 }
 
-export default function TagRender({ day, isMobile }: tagProps) {
+export default function TagRender({ day, isMobile, isWeekView }: tagProps) {
   // .day() returns the day of the week where 0 is Sunday and 6 is Saturday
 
   const renderBoxes = mapEventsToRenderIndex(day.cEvents);
@@ -65,7 +66,8 @@ export default function TagRender({ day, isMobile }: tagProps) {
               isStart,
               tagColor,
               backgroundTagColor,
-              isEnd
+              isEnd,
+              isWeekView
             );
           } else {
             return (
@@ -84,8 +86,18 @@ function renderEvent(
   isStart: boolean,
   tagColor: string,
   backgroundTagColor: string,
-  isEnd: boolean
+  isEnd: boolean,
+  isWeekView: boolean
 ) {
+  const isLastDayOfMonth = dayjs(date).isSame(
+    dayjs(date).endOf("month"),
+    "day"
+  );
+  const isFirstDayOfMonth = dayjs(date).isSame(
+    dayjs(date).startOf("month"),
+    "day"
+  );
+
   const isLastDayOfWeek = date.day() === 6;
   const isFirstDayOfWeek = date.day() === 0;
   const styles = isMobile ? mobileStyles : desktopStyles;
@@ -96,13 +108,13 @@ function renderEvent(
       style={isMobile ? { height: 20 } : { height: 24 }}
     >
       {isMulti ? (
-        isStart || isFirstDayOfWeek ? (
+        isStart || isFirstDayOfWeek || (isFirstDayOfMonth && !isWeekView) ? (
           //this is the opening part of a tag
           <Tag
             bordered={false}
             className={styles.first}
             style={
-              isLastDayOfWeek
+              isLastDayOfWeek || isEnd || isLastDayOfMonth
                 ? {
                     color: tagColor,
                     background: backgroundTagColor,
@@ -118,7 +130,7 @@ function renderEvent(
           >
             {cEvent.title}
           </Tag>
-        ) : isEnd ? (
+        ) : isEnd || isLastDayOfWeek || (isLastDayOfMonth && !isWeekView) ? (
           // this is the tag to render if it is the end
           <Tag
             bordered={false}
