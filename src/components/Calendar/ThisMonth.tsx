@@ -7,6 +7,23 @@ import dayjs from "dayjs";
 import { Badge, Card, Col, Flex, Row, Tag } from "antd";
 import TagRender from "../Tags/TagRender";
 //dayjs.extend(isoMonth);
+const desktopStyle: React.CSSProperties = {
+  width: "150px",
+  height: "300px"
+};
+const mobileStyle: React.CSSProperties = {
+  width: "50px",
+  height: "150px",
+  padding: "-25px"
+};
+const desktopCalender: React.CSSProperties = {
+  marginTop: "30px",
+  width: "1050"
+};
+const mobileCalender: React.CSSProperties = {
+  marginTop: "30px",
+  width: "350"
+};
 
 export type DayWithEvents = {
   date: dayjs.Dayjs;
@@ -14,6 +31,7 @@ export type DayWithEvents = {
   offset: number;
 };
 type ThisMonthProps = {
+  isMobile: boolean;
   onDelete: (id: string) => void;
   events: CEvent[];
   availableTags: aTag[];
@@ -93,13 +111,15 @@ export function filterDatesInCurrentMonth(
 export default function ThisMonth({
   events,
   availableTags,
-  curMonth
+  curMonth,
+  isMobile
 }: ThisMonthProps) {
   const [eventsThisMonth, setEventsThisMonth] = useState<CEvent[]>();
   const [MonthArray, setMonthArray] = useState<DayWithEvents[]>([]);
   const [preMonthArray, setPreMonthArray] = useState<dayjs.Dayjs[]>([]);
   const [postMonthArray, setPostMonthArray] = useState<dayjs.Dayjs[]>([]);
-
+  const styles = isMobile ? mobileStyle : desktopStyle;
+  const calStyles = isMobile ? mobileCalender : desktopCalender;
   useEffect(() => {
     console.log(events);
     setPreMonthArray(getDaysBeforeMonth(curMonth));
@@ -129,36 +149,46 @@ export default function ThisMonth({
     setMonthArray(newMonthArray);
   }, [events, curMonth]);
   return (
-    <Col style={{ marginTop: "30px", width: "1050" }}>
-      <Row
-        gutter={16}
-        style={{ width: "1050" }}
-        align={"middle"}
-        justify={"center"}
-      >
+    <Col style={calStyles}>
+      <Row gutter={16} style={calStyles} align={"middle"} justify={"center"}>
         {preMonthArray.map(day => {
           return (
             <Card
-              style={{ width: "150px", height: "200px", background: "#D2D2D2" }}
-              title={day.format("ddd, DD MMM ").toString()}
+              size={isMobile ? "small" : "default"}
+              style={{ ...styles, background: "#D2D2D2" }}
+              title={
+                isMobile
+                  ? day.format(" DD  ")
+                  : day.format("ddd, DD MMM ").toString()
+              }
             ></Card>
           );
         })}
         {MonthArray.map(day => {
           return (
             <Card
-              style={{ width: "150px", height: "200px" }}
-              title={day.date.format("ddd, DD MMM ").toString()}
+              size={isMobile ? "small" : "default"}
+              style={styles}
+              title={
+                isMobile
+                  ? day.date.format(" DD  ")
+                  : day.date.format("ddd, DD MMM ").toString()
+              }
             >
-              <TagRender day={day} />
+              <TagRender isMobile={isMobile} day={day} />
             </Card>
           );
         })}
         {postMonthArray.map(day => {
           return (
             <Card
-              style={{ width: "150px", height: "200px", background: "#D2D2D2" }}
-              title={day.format("ddd, DD MMM ").toString()}
+              size={isMobile ? "small" : "default"}
+              style={{ ...styles, background: "#D2D2D2" }}
+              title={
+                isMobile
+                  ? day.format(" DD  ")
+                  : day.format("ddd, DD MMM ").toString()
+              }
             ></Card>
           );
         })}

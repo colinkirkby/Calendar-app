@@ -1,0 +1,37 @@
+
+.first{
+    
+    width: 48px;
+    margin-left: -10px;
+    font-size: 9px;
+    height: 20px;
+    z-index: 10;
+    
+
+}
+.middle{
+    margin-left: -13px;
+    width: 50px;
+    
+    font-size: 9px;
+    height: 20px;
+    
+
+}
+.end{
+    margin-left: -12px;
+    width: 46px;
+    font-size: 9px;
+    height: 20px;
+    
+
+}
+.single{
+    width: 44px;
+    margin-left: -10px;
+    overflow: "hidden";
+    font-size: 9px;
+    height: 20px;
+    
+
+}

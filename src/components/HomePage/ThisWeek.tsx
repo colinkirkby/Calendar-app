@@ -6,8 +6,17 @@ import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import { Badge, Card, Col, Flex, Row, Tag } from "antd";
 import TagRender from "../Tags/TagRender";
+import styled from "styled-components";
 dayjs.extend(isoWeek);
-
+const desktopStyle: React.CSSProperties = {
+  width: "150px",
+  height: "300px"
+};
+const mobileStyle: React.CSSProperties = {
+  width: "50px",
+  height: "300px",
+  padding: "-25px"
+};
 export type DayWithEvents = {
   date: dayjs.Dayjs;
   cEvents: CEvent[];
@@ -37,8 +46,8 @@ export function filterDatesInCurrentWeek(events: CEvent[]) {
 
   return events
     .filter(cEvent => {
-      const start = dayjs(cEvent.startDate);
-      const end = dayjs(cEvent.endDate);
+      const start = dayjs(cEvent.startDate).startOf("day");
+      const end = dayjs(cEvent.endDate).endOf("day");
       return (
         (start.isAfter(startOfWeek) && start.isBefore(endOfWeek)) ||
         start.isSame(startOfWeek) ||
@@ -51,10 +60,14 @@ export function filterDatesInCurrentWeek(events: CEvent[]) {
     .sort(dateSort);
 }
 
-export default function ThisWeek({ events, availableTags }: HomePageProps) {
+export default function ThisWeek({
+  events,
+  availableTags,
+  isMobile
+}: HomePageProps) {
   const [eventsThisWeek, setEventsThisWeek] = useState<CEvent[]>();
   const [weekArray, setWeekArray] = useState<DayWithEvents[]>([]);
-
+  const styles = isMobile ? mobileStyle : desktopStyle;
   useEffect(() => {
     let newEventsThisWeek = filterDatesInCurrentWeek(events);
     const indexedEventsThisWeek = newEventsThisWeek.map((cEvent, index) => {
@@ -87,10 +100,16 @@ export default function ThisWeek({ events, availableTags }: HomePageProps) {
         {weekArray.map(day => {
           return (
             <Card
-              style={{ width: "150px", height: "300px" }}
-              title={day.date.format("ddd, DD MMM ").toString()}
+              bordered={!isMobile}
+              style={styles}
+              size={isMobile ? "small" : "default"}
+              title={
+                isMobile
+                  ? day.date.format("DD  ").toString()
+                  : day.date.format("ddd, DD MMM ").toString()
+              }
             >
-              <TagRender day={day} />
+              <TagRender day={day} isMobile={isMobile} />
             </Card>
           );
         })}

@@ -8,6 +8,7 @@ import { RangePickerProps } from "antd/es/date-picker";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 export type CalendarPageProps = {
+  isMobile: boolean;
   onDelete: (id: string) => void;
   events: CEvent[];
   availableTags: Tag[];
@@ -15,7 +16,8 @@ export type CalendarPageProps = {
 export default function CalendarPage({
   onDelete,
   events,
-  availableTags
+  availableTags,
+  isMobile
 }: CalendarPageProps) {
   const currentDate = dayjs();
 
@@ -26,24 +28,38 @@ export default function CalendarPage({
   }, []);
 
   return (
-    <Content>
+    <Content style={{ margin: "auto", marginBottom: "20%" }}>
       <Col>
-        <Row align={"middle"} justify={"space-between"}>
+        <Row
+          align={"middle"}
+          justify={"space-between"}
+          style={{
+            marginTop: "5px",
+
+            width: "100%"
+          }}
+        >
           <Button
+            size="large"
             type="primary"
-            style={{ height: "50px" }}
             onClick={() => {
               setSelectedDate(selected.subtract(1, "month"));
             }}
-          >
-            <LeftOutlined style={{ fontSize: "200%" }} />
-          </Button>
+            style={{ marginLeft: "5px" }}
+            icon={
+              <LeftOutlined
+                style={isMobile ? { fontSize: "100%" } : { fontSize: "200%" }}
+              />
+            }
+          ></Button>
           <Row
             justify={"space-between"}
             align={"middle"}
-            style={{ width: "80%" }}
+            style={isMobile ? { width: "40%" } : { width: "80%" }}
           >
-            <h1>{selected.format("MMM YYYY").toString()}</h1>
+            <h1 style={isMobile ? { fontSize: "20px" } : {}}>
+              {selected.format("MMM YYYY").toString()}
+            </h1>
 
             <DatePicker
               picker="month"
@@ -53,17 +69,29 @@ export default function CalendarPage({
             />
           </Row>
           <Button
+            size="large"
             type="primary"
-            style={{ height: "50px" }}
             onClick={() => {
               setSelectedDate(selected.add(1, "month"));
             }}
-          >
-            <RightOutlined style={{ fontSize: "200%" }} />
-          </Button>
+            style={{ marginRight: "5px" }}
+            icon={
+              <RightOutlined
+                style={isMobile ? { fontSize: "100%" } : { fontSize: "200%" }}
+              />
+            }
+          ></Button>
         </Row>
-        <Row style={{ width: "1050px", margin: "auto" }} justify={"center"}>
+        <Row
+          style={
+            isMobile
+              ? { width: "350px", margin: "auto" }
+              : { width: "1050px", margin: "auto" }
+          }
+          justify={"center"}
+        >
           <ThisMonth
+            isMobile={isMobile}
             events={events}
             onDelete={onDelete}
             availableTags={availableTags}

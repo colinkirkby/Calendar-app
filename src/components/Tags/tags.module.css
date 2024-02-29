@@ -1,8 +1,9 @@
 
 .first{
-    border-right-color: "#ffffff";
-    width: 150px;
-    margin-left: -26px;
+    
+    width: 144px;
+    margin-left: -20px;
+    height: 24px;
 }
 .middle{
     margin-left: -26px;
@@ -10,15 +11,18 @@
     border-radius: "0" !important;
     width: 150px;
     border-left-color: "#fafafa" !important;
+    height: 24px;
 }
 .end{
-    border-left-color: "#fffffff";
+    
     margin-left: -26px;
-    width: 150px;
+    width: 144px;
+    height: 24px;
 }
 .single{
-    width: 150px;
-    margin-left: -26px;
+    width: 138px;
+    margin-left: -20px;
+    height: 24px;
     overflow: "hidden";
     border-radius: "0" !important;
    

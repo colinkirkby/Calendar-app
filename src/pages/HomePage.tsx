@@ -10,22 +10,26 @@ export type HomePageProps = {
   onDelete: (id: string) => void;
   events: CEvent[];
   availableTags: Tag[];
+  isMobile: boolean;
 };
 export default function HomePage({
   events,
   onDelete,
-  availableTags
+  availableTags,
+  isMobile
 }: HomePageProps) {
   return (
     <Content>
-      <h1>Home</h1>
+      <h1 style={{ marginLeft: "5px" }}>Home</h1>
       <Flex className="flex-wrap justify-content-center " gap={40}>
         <ThisWeek
+          isMobile={isMobile}
           events={events}
           onDelete={onDelete}
           availableTags={availableTags}
         />
         <UpcomingEvents
+          isMobile={isMobile}
           events={events}
           onDelete={onDelete}
           availableTags={availableTags}

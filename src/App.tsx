@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import "./custom.scss";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, Link } from "react-router-dom";
 import NewNote from "./pages/NewEvent";
 import {
   useLocalStorage,
@@ -10,7 +10,16 @@ import {
 } from "./utilities/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 import HomePage from "./pages/HomePage";
-import { Col, Layout, Row, Flex, Space, ConfigProvider, theme } from "antd";
+import {
+  Col,
+  Layout,
+  Row,
+  Flex,
+  Space,
+  ConfigProvider,
+  theme,
+  FloatButton
+} from "antd";
 import CEventsWithTags from "./utilities/NotesWithTags";
 import Note from "./pages/Note";
 import EditNote from "./pages/EditNote";
@@ -21,6 +30,13 @@ import CalendarPage from "./pages/CalenderPage";
 import dayjs from "dayjs";
 import { App as AntApp } from "antd";
 import { Content } from "antd/es/layout/layout";
+import {
+  CalculatorFilled,
+  CalendarFilled,
+  HomeFilled,
+  PlusOutlined,
+  ProductOutlined
+} from "@ant-design/icons";
 
 export type EventData = {
   title: string;
@@ -150,92 +166,114 @@ function App() {
       }}
     >
       <AntApp>
-        <Flex gap="middle" wrap="wrap">
-          <Layout style={{ background: "#FFFFFFFF" }}>
-            <AppHeader
-              setShowSideBar={setShowSideBar}
-              showSideBar={showSideBar}
-            />
-            <Row gutter={5} style={{ flexWrap: "nowrap" }}>
-              {!isMobile && (
-                <AppMenu
-                  setShowSideBar={setShowSideBar}
-                  showSideBar={showSideBar}
+        <Layout style={{ background: "#FFFFFFFF", margin: "auto" }}>
+          <AppHeader
+            setShowSideBar={setShowSideBar}
+            showSideBar={showSideBar}
+          />
+          <Row gutter={5} style={{ flexWrap: "nowrap" }}>
+            {!isMobile && (
+              <AppMenu
+                setShowSideBar={setShowSideBar}
+                showSideBar={showSideBar}
+              />
+            )}
+            <Content
+              style={{
+                marginInline: "auto",
+                justifyContent: "center",
+                display: "flex",
+                maxWidth: "1431px"
+              }}
+            >
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <HomePage
+                      isMobile={isMobile}
+                      events={eventsWithTags}
+                      onDelete={deleteTag}
+                      availableTags={tags}
+                    />
+                  }
                 />
-              )}
-              <Content
-                style={{
-                  marginInline: "auto",
-                  justifyContent: "center",
-                  display: "flex",
-                  maxWidth: "1431px"
-                }}
-              >
-                <Routes>
+                <Route
+                  path="/view"
+                  element={
+                    <ViewAllPage
+                      events={eventsWithTags}
+                      availableTags={tags}
+                      onEdit={editTag}
+                      onDelete={deleteTag}
+                    />
+                  }
+                />
+                <Route
+                  path="/calendar"
+                  element={
+                    <CalendarPage
+                      isMobile={isMobile}
+                      events={eventsWithTags}
+                      onDelete={deleteTag}
+                      availableTags={tags}
+                    />
+                  }
+                />
+                <Route
+                  path="/new"
+                  element={
+                    <NewNote
+                      onSubmit={onCreateNote}
+                      onAddTag={addTag}
+                      availableTags={tags}
+                    />
+                  }
+                />
+                <Route path="*" element={<Navigate to="/" />} />
+                <Route
+                  path="/:id"
+                  element={<CEventsWithTags cEvents={eventsWithTags} />}
+                >
+                  <Route index element={<Note onDelete={onDeleteNote} />} />
                   <Route
-                    path="/"
+                    path="edit"
                     element={
-                      <HomePage
-                        events={eventsWithTags}
-                        onDelete={deleteTag}
-                        availableTags={tags}
-                      />
-                    }
-                  />
-                  <Route
-                    path="/view"
-                    element={
-                      <ViewAllPage
-                        events={eventsWithTags}
-                        availableTags={tags}
-                        onEdit={editTag}
-                        onDelete={deleteTag}
-                      />
-                    }
-                  />
-                  <Route
-                    path="/calendar"
-                    element={
-                      <CalendarPage
-                        events={eventsWithTags}
-                        onDelete={deleteTag}
-                        availableTags={tags}
-                      />
-                    }
-                  />
-                  <Route
-                    path="/new"
-                    element={
-                      <NewNote
-                        onSubmit={onCreateNote}
+                      <EditNote
+                        onSubmit={onEditNote}
                         onAddTag={addTag}
                         availableTags={tags}
                       />
                     }
                   />
-                  <Route path="*" element={<Navigate to="/" />} />
-                  <Route
-                    path="/:id"
-                    element={<CEventsWithTags cEvents={eventsWithTags} />}
-                  >
-                    <Route index element={<Note onDelete={onDeleteNote} />} />
-                    <Route
-                      path="edit"
-                      element={
-                        <EditNote
-                          onSubmit={onEditNote}
-                          onAddTag={addTag}
-                          availableTags={tags}
-                        />
-                      }
-                    />
-                  </Route>
-                </Routes>
-              </Content>
-              {!isMobile && <div style={{ width: 256 }}></div>}
-            </Row>
-          </Layout>
-        </Flex>
+                </Route>
+              </Routes>
+            </Content>
+            {!isMobile && <div style={{ width: 256 }}></div>}
+          </Row>
+        </Layout>
+        {isMobile && (
+          <>
+            <Link to={"/"}>
+              <FloatButton
+                style={{ right: 45 + 90 + 90 + 90 }}
+                icon={<HomeFilled />}
+              />
+            </Link>
+            <Link to={"/calendar"}>
+              <FloatButton
+                style={{ right: 45 + 90 + 90 }}
+                icon={<CalendarFilled />}
+              />
+            </Link>
+            <Link to={"/new"}>
+              <FloatButton style={{ right: 45 + 90 }} icon={<PlusOutlined />} />
+            </Link>
+            <Link to={"/view"}>
+              <FloatButton style={{ right: 45 }} icon={<ProductOutlined />} />
+            </Link>
+          </>
+        )}
       </AntApp>
     </ConfigProvider>
   );

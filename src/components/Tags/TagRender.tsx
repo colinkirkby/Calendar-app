@@ -1,10 +1,13 @@
-import { Flex, Space, Tag } from "antd";
+import { Flex, Row, Space, Tag, Typography } from "antd";
 import dayjs from "dayjs";
 import { DayWithEvents } from "../HomePage/ThisWeek";
+import desktopStyles from "./tags.module.css";
+import mobileStyles from "./tagsMobile.module.css";
 type tagProps = {
+  isMobile: boolean;
   day: DayWithEvents;
 };
-import styles from "./tags.module.css";
+
 import { Link } from "react-router-dom";
 import { CEvent } from "../../App";
 
@@ -32,10 +35,12 @@ function mapEventsToRenderIndex(cEvents: CEvent[]): CEvent[][] {
   return indexedEvents;
 }
 
-export default function TagRender({ day }: tagProps) {
+export default function TagRender({ day, isMobile }: tagProps) {
+  // .day() returns the day of the week where 0 is Sunday and 6 is Saturday
+
   const renderBoxes = mapEventsToRenderIndex(day.cEvents);
   return (
-    <Flex vertical gap={5}>
+    <Flex vertical gap={isMobile ? 2 : 5}>
       {renderBoxes.length > 0 &&
         renderBoxes.map((cEvents, index) => {
           if (cEvents.length > 0) {
@@ -43,10 +48,18 @@ export default function TagRender({ day }: tagProps) {
             let tagColor =
               cEvent.tags.length > 0 ? cEvent.tags[0].color : "#1677FF";
             let backgroundTagColor = tagColor + "32";
-            let isMulti = !cEvent.startDate.isSame(cEvent.endDate);
-            let isStart = day.date.isSame(cEvent.startDate);
-            let isEnd = day.date.isSame(cEvent.endDate);
+            let isMulti = !cEvent.startDate
+              .startOf("day")
+              .isSame(cEvent.endDate.startOf("day"));
+            let isStart = day.date
+              .startOf("day")
+              .isSame(cEvent.startDate.startOf("day"));
+            let isEnd = day.date
+              .startOf("day")
+              .isSame(cEvent.endDate.startOf("day"));
             return renderEvent(
+              day.date,
+              isMobile,
               cEvent,
               isMulti,
               isStart,
@@ -55,13 +68,19 @@ export default function TagRender({ day }: tagProps) {
               isEnd
             );
           } else {
-            return <div style={{ height: "27.53px" }} />;
+            return (
+              <div
+                style={isMobile ? { height: "20.58px" } : { height: "24px" }}
+              />
+            );
           }
         })}
     </Flex>
   );
 }
 function renderEvent(
+  date: dayjs.Dayjs,
+  isMobile: boolean,
   cEvent: CEvent,
   isMulti: boolean,
   isStart: boolean,
@@ -69,67 +88,76 @@ function renderEvent(
   backgroundTagColor: string,
   isEnd: boolean
 ) {
+  const isLastDayOfWeek = date.day() === 6;
+  const isFirstDayOfWeek = date.day() === 0;
+  const styles = isMobile ? mobileStyles : desktopStyles;
   console.log(isMulti);
   return (
-    <Link to={`/${cEvent.id}`}>
+    <Link
+      to={`/${cEvent.id}`}
+      style={isMobile ? { height: 20 } : { height: 24 }}
+    >
       {isMulti ? (
         isStart ? (
           //this is the opening part of a tag
           <Tag
+            bordered={false}
             className={styles.first}
-            style={{
-              borderColor: tagColor,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              color: tagColor,
-              background: backgroundTagColor,
-              borderBlockStartColor: tagColor
-            }}
+            style={
+              isLastDayOfWeek
+                ? {
+                    color: tagColor,
+                    background: backgroundTagColor,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                  }
+                : {
+                    color: tagColor,
+                    background: backgroundTagColor
+                  }
+            }
           >
             {cEvent.title}
           </Tag>
         ) : isEnd ? (
           // this is the tag to render if it is the end
           <Tag
+            bordered={false}
             className={styles.end}
             style={{
-              borderColor: tagColor,
               overflow: "hidden",
               textOverflow: "ellipsis",
-              color: tagColor,
-              background: backgroundTagColor,
-              borderBlockStartColor: tagColor
+              color: backgroundTagColor,
+              background: backgroundTagColor
             }}
           >
-            {cEvent.title}
+            {"."}
           </Tag>
         ) : (
           //this is a middle tag
           <Tag
+            bordered={false}
             className={styles.middle}
             style={{
-              borderColor: tagColor,
               overflow: "hidden",
               textOverflow: "ellipsis",
-              color: tagColor,
-              background: backgroundTagColor,
-              borderBlockStartColor: tagColor
+              color: backgroundTagColor,
+              background: backgroundTagColor
             }}
           >
-            {cEvent.title}
+            {"."}
           </Tag>
         )
       ) : (
         <Tag
           className={styles.single}
+          bordered={false}
           //this is a tag that is a single day
           style={{
-            borderColor: tagColor,
             overflow: "hidden",
             textOverflow: "ellipsis",
             color: tagColor,
-            background: backgroundTagColor,
-            borderBlockStartColor: tagColor
+            background: backgroundTagColor
           }}
         >
           {cEvent.title}
