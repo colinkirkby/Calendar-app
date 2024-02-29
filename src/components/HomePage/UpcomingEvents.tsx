@@ -15,12 +15,10 @@ export default function UpcomingEvents({ events }: HomePageProps) {
       tempEvents
         .sort(dateSort)
         .filter(cEvent => {
-          return cEvent.startDate
-            .startOf("day")
-            .isAfter(
-              curr.startOf("day") ||
-                cEvent.startDate.startOf("day").isSame(curr.startOf("day"))
-            );
+          return (
+            cEvent.startDate.startOf("day").isAfter(curr.startOf("day")) ||
+            cEvent.startDate.startOf("day").isSame(curr.startOf("day"))
+          );
         })
         .slice(0, 5)
     );
