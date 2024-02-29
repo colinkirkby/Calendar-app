@@ -22,7 +22,7 @@ export default function NoteForm({
   title = "",
   tags = [],
   body = "",
-  color = "",
+  color = "#00A5EC",
   startDate: startDate = dayjs(),
   endDate: endDate = dayjs(),
   startTime: startTime = dayjs(),
