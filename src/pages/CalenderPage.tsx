@@ -1,60 +1,76 @@
-import { Button, Card, Container, Form, Stack } from "react-bootstrap";
+import { Button, Card, Form, Flex, DatePicker, Col, Row } from "antd";
+import { Content } from "antd/es/layout/layout";
 import { useCallback, useState } from "react";
-import { SelectDatepicker } from "react-select-datepicker";
-const WeekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const MonThs = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
-export default function CalendarPage() {
-  const currentDate = new Date();
+import dayjs from "dayjs";
+import ThisMonth from "../components/Calendar/ThisMonth";
+import { CEvent, Tag } from "../App";
+import { RangePickerProps } from "antd/es/date-picker";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
-  const [selected, setSelectedDate] = useState<Date>(currentDate);
+export type CalendarPageProps = {
+  onDelete: (id: string) => void;
+  events: CEvent[];
+  availableTags: Tag[];
+};
+export default function CalendarPage({
+  onDelete,
+  events,
+  availableTags
+}: CalendarPageProps) {
+  const currentDate = dayjs();
 
-  const onDateChange = useCallback((value: Date | null) => {
+  const [selected, setSelectedDate] = useState<dayjs.Dayjs>(currentDate);
+
+  const onDateChange = useCallback((value: dayjs.Dayjs) => {
     value && setSelectedDate(value);
   }, []);
 
   return (
-    <Container className="m b-4 ">
-      <Form>
-        <Form.Group>
-          <Form.Label>Date</Form.Label>
-          <SelectDatepicker
-            selectedDate={selected}
-            onDateChange={onDateChange}
+    <Content>
+      <Col>
+        <Row align={"middle"} justify={"space-between"}>
+          <Button
+            type="primary"
+            style={{ height: "50px" }}
+            onClick={() => {
+              setSelectedDate(selected.subtract(1, "month"));
+            }}
+          >
+            <LeftOutlined style={{ fontSize: "200%" }} />
+          </Button>
+          <Row
+            justify={"space-between"}
+            align={"middle"}
+            style={{ width: "80%" }}
+          >
+            <h1>{selected.format("MMM YYYY").toString()}</h1>
+
+            <DatePicker
+              picker="month"
+              value={selected}
+              defaultValue={currentDate}
+              onChange={onDateChange}
+            />
+          </Row>
+          <Button
+            type="primary"
+            style={{ height: "50px" }}
+            onClick={() => {
+              setSelectedDate(selected.add(1, "month"));
+            }}
+          >
+            <RightOutlined style={{ fontSize: "200%" }} />
+          </Button>
+        </Row>
+        <Row style={{ width: "1050px", margin: "auto" }} justify={"center"}>
+          <ThisMonth
+            events={events}
+            onDelete={onDelete}
+            availableTags={availableTags}
+            curMonth={selected}
           />
-        </Form.Group>
-      </Form>
-      <Stack
-        className="flex-wrap "
-        style={{ marginInline: "110px" }}
-        direction="horizontal"
-      >
-        {[...Array(35)].map((e, i) => (
-          <DateBox />
-        ))}
-      </Stack>
-    </Container>
-  );
-}
-function DateBox() {
-  return (
-    <Card style={{ minWidth: "150px", minHeight: "150px" }}>
-      <Card.Img variant="top" src="holder.js/100px180" />
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-      </Card.Body>
-    </Card>
+        </Row>
+      </Col>
+    </Content>
   );
 }

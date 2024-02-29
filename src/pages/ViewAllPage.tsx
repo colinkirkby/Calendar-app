@@ -10,7 +10,7 @@ import { EditTagsModel } from "../components/Tags/EditTagsModel";
 type ViewPageProps = {
   events: CEvent[];
   availableTags: Tag[];
-  onEdit: (id: string, label: string) => void;
+  onEdit: (id: string, label: string, color: string) => void;
   onDelete: (id: string) => void;
 };
 export type ModalProps = {
@@ -18,7 +18,7 @@ export type ModalProps = {
   handleClose: () => void;
   availableTags: Tag[];
   onDelete: (id: string) => void;
-  handleChange: (id: string, label: string) => void;
+  handleChange: (id: string, label: string, color: string) => void;
 };
 
 export default function ViewAllPage({
@@ -67,7 +67,7 @@ export default function ViewAllPage({
       />
     </Content>
   );
-  function handleChange(label: string, id: string) {
-    onEdit(id, label);
+  function handleChange(label: string, id: string, color: string) {
+    onEdit(id, label, color);
   }
 }

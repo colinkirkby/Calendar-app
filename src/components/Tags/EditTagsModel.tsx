@@ -23,17 +23,19 @@ export function EditTagsModel({
           vertical
         >
           {availableTags.map(tag => (
-            <Row key={tag.id}>
+            <Row key={tag.id} style={{ flexWrap: "nowrap", width: "100%" }}>
               <ColorPicker
                 disabledAlpha
+                value={tag.color}
+                defaultValue={tag.color}
                 onChange={e => {
-                  tag.color = e.toHexString();
+                  handleChange(tag.label, tag.id, e.toHexString());
                 }}
               />
               <Input
                 type="text"
                 value={tag.label}
-                onChange={e => handleChange(e.target.value, tag.id)}
+                onChange={e => handleChange(e.target.value, tag.id, tag.color)}
               />
               <Button danger onClick={() => onDelete(tag.id)}>
                 X

@@ -87,7 +87,6 @@ function renderEvent(
             }}
           >
             {cEvent.title}
-            {cEvent.renderIndex}
           </Tag>
         ) : isEnd ? (
           // this is the tag to render if it is the end
@@ -103,7 +102,6 @@ function renderEvent(
             }}
           >
             {cEvent.title}
-            {cEvent.renderIndex}
           </Tag>
         ) : (
           //this is a middle tag
@@ -119,7 +117,6 @@ function renderEvent(
             }}
           >
             {cEvent.title}
-            {cEvent.renderIndex}
           </Tag>
         )
       ) : (

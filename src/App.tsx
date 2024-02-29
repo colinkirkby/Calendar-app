@@ -128,10 +128,10 @@ function App() {
     setTags(prev => [...prev, tag]);
   }
 
-  function editTag(id: string, label: string) {
+  function editTag(id: string, label: string, color: string) {
     setTags(prevTags => {
       return prevTags.map(tag => {
-        return tag.id === id ? { ...tag, label } : tag;
+        return tag.id === id ? { ...tag, label, color } : tag;
       });
     });
   }
@@ -193,7 +193,16 @@ function App() {
                       />
                     }
                   />
-                  <Route path="/calendar" element={<CalendarPage />} />
+                  <Route
+                    path="/calendar"
+                    element={
+                      <CalendarPage
+                        events={eventsWithTags}
+                        onDelete={deleteTag}
+                        availableTags={tags}
+                      />
+                    }
+                  />
                   <Route
                     path="/new"
                     element={
