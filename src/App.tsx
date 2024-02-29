@@ -101,6 +101,7 @@ var style: React.CSSProperties = {
   borderTop: "1px solid #E7E7E7",
   textAlign: "center",
   padding: "20px",
+  zIndex: 12,
   position: "fixed",
   left: "0",
   bottom: "0",
