@@ -71,9 +71,7 @@ export default function TagRender({ day, isMobile, isWeekView }: tagProps) {
             );
           } else {
             return (
-              <div
-                style={isMobile ? { height: "20px" } : { height: "24.5px" }}
-              />
+              <div style={isMobile ? { height: "22px" } : { height: "24px" }} />
             );
           }
         })}
@@ -105,77 +103,100 @@ function renderEvent(
   const styles = isMobile ? mobileStyles : desktopStyles;
   console.log(isMulti);
   return (
-    <Link
-      to={`/${cEvent.id}`}
-      style={isMobile ? { height: 20 } : { height: 24 }}
-    >
+    <>
       {isMulti ? (
         isStart || isFirstDayOfWeek || (isFirstDayOfMonth && !isWeekView) ? (
           //this is the opening part of a tag
-          <Tag
-            bordered={false}
-            className={styles.first}
+          <Link
+            to={`/${cEvent.id}`}
             style={
-              isLastDayOfWeek || isEnd || isLastDayOfMonth
-                ? {
-                    color: tagColor,
-                    background: backgroundTagColor,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis"
-                  }
-                : {
-                    overflow: "visible",
-                    color: tagColor,
-                    background: backgroundTagColor
-                  }
+              isMobile
+                ? { height: 22, marginTop: "-1px" }
+                : { height: 24, marginTop: "-1px" }
             }
+          >
+            <Tag
+              bordered={false}
+              className={styles.first}
+              style={
+                isLastDayOfWeek || isEnd || isLastDayOfMonth
+                  ? {
+                      color: tagColor,
+                      background: backgroundTagColor,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      paddingTop: "-1px"
+                    }
+                  : {
+                      marginTop: "-1px",
+                      overflow: "visible",
+                      color: tagColor,
+                      background: backgroundTagColor
+                    }
+              }
+            >
+              {cEvent.title}
+            </Tag>
+          </Link>
+        ) : isEnd || isLastDayOfWeek || (isLastDayOfMonth && !isWeekView) ? (
+          // this is the tag to render if it is the end
+          <Link
+            to={`/${cEvent.id}`}
+            style={isMobile ? { height: 22 } : { height: 24 }}
+          >
+            <Tag
+              bordered={false}
+              className={styles.end}
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                color: backgroundTagColor,
+                background: backgroundTagColor
+              }}
+            >
+              {" .   "}
+            </Tag>
+          </Link>
+        ) : (
+          //this is a middle tag
+          <Link
+            to={`/${cEvent.id}`}
+            style={isMobile ? { height: 22 } : { height: 24 }}
+          >
+            <Tag
+              bordered={false}
+              className={styles.middle}
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                color: backgroundTagColor,
+                background: backgroundTagColor
+              }}
+            >
+              {".      "}
+            </Tag>
+          </Link>
+        )
+      ) : (
+        <Link
+          to={`/${cEvent.id}`}
+          style={isMobile ? { height: 22 } : { height: 24 }}
+        >
+          <Tag
+            className={styles.single}
+            bordered={false}
+            //this is a tag that is a single day
+            style={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              color: tagColor,
+              background: backgroundTagColor
+            }}
           >
             {cEvent.title}
           </Tag>
-        ) : isEnd || isLastDayOfWeek || (isLastDayOfMonth && !isWeekView) ? (
-          // this is the tag to render if it is the end
-          <Tag
-            bordered={false}
-            className={styles.end}
-            style={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              color: backgroundTagColor,
-              background: backgroundTagColor
-            }}
-          >
-            {"."}
-          </Tag>
-        ) : (
-          //this is a middle tag
-          <Tag
-            bordered={false}
-            className={styles.middle}
-            style={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              color: backgroundTagColor,
-              background: backgroundTagColor
-            }}
-          >
-            {"."}
-          </Tag>
-        )
-      ) : (
-        <Tag
-          className={styles.single}
-          bordered={false}
-          //this is a tag that is a single day
-          style={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            color: tagColor,
-            background: backgroundTagColor
-          }}
-        >
-          {cEvent.title}
-        </Tag>
+        </Link>
       )}
-    </Link>
+    </>
   );
 }

@@ -4,12 +4,14 @@
     width: 144px;
     margin-left: -20px;
     height: 24px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 .middle{
     margin-left: -26px;
     
     width: 150px;
-  
+    border-radius: 0px;
     height: 24px;
 }
 .end{
@@ -17,6 +19,8 @@
     margin-left: -26px;
     width: 144px;
     height: 24px;
+    border-top-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 .single{
     width: 138px;

@@ -1,24 +1,28 @@
 
 .first{
-    width: 49px;
+    width: 47px;
     margin-left: -10px;
-    
+    font-size: x-small;
     z-index: 10;
     overflow: "visible"!important ;
-   
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
    
 
 }
 .middle{
+     font-size: x-small;
     margin-left: -13px;
-    width: 54px;
+    width: 52px;
     
+    border-radius: 0px;
     
     
     
 
 }
 .truncate{
+    font-size: x-small;
     width: 50px;
     margin-left: -10px;
     
@@ -26,14 +30,18 @@
    
 }
 .end{
-    margin-left: -13.5px;
+    font-size: x-small;
+    margin-left: -12px;
     width: 46px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
     
     
     
 
 }
 .single{
+    font-size: x-small;
     width: 44px;
     margin-left: -10px;
     overflow: "hidden";

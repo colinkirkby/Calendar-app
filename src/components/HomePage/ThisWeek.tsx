@@ -10,12 +10,14 @@ import styled from "styled-components";
 dayjs.extend(isoWeek);
 const desktopStyle: React.CSSProperties = {
   width: "150px",
-  height: "300px"
+  height: "300px",
+  borderRadius: "0px"
 };
 const mobileStyle: React.CSSProperties = {
   width: "50px",
   height: "300px",
-  padding: "-25px"
+  padding: "-25px",
+  borderRadius: "0px"
 };
 export type DayWithEvents = {
   date: dayjs.Dayjs;

@@ -9,12 +9,14 @@ import TagRender from "../Tags/TagRender";
 //dayjs.extend(isoMonth);
 const desktopStyle: React.CSSProperties = {
   width: "150px",
-  height: "300px"
+  height: "300px",
+  borderRadius: "0px"
 };
 const mobileStyle: React.CSSProperties = {
   width: "50px",
   height: "150px",
-  padding: "-25px"
+  padding: "-25px",
+  borderRadius: "0px"
 };
 const desktopCalender: React.CSSProperties = {
   marginTop: "30px",
@@ -155,7 +157,7 @@ export default function ThisMonth({
           return (
             <Card
               size={isMobile ? "small" : "default"}
-              style={{ ...styles, background: "#D2D2D2" }}
+              style={{ ...styles, background: "#D2D2D2", borderRadius: "0px" }}
               title={
                 isMobile
                   ? day.format(" DD  ")
