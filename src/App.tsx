@@ -37,6 +37,7 @@ import {
   PlusOutlined,
   ProductOutlined
 } from "@ant-design/icons";
+import { Analytics } from "@vercel/analytics";
 
 export type EventData = {
   title: string;
@@ -172,134 +173,139 @@ function App() {
   }
 
   return (
-    <ConfigProvider
-      theme={{
-        algorithm: theme.defaultAlgorithm
-      }}
-    >
-      <AntApp>
-        <Layout
-          style={{
-            background: "#FFFFFFFF",
-            margin: "auto",
-            marginBottom: "30%"
-          }}
-        >
-          <AppHeader
-            setShowSideBar={setShowSideBar}
-            showSideBar={showSideBar}
-          />
-          <Row gutter={5} style={{ flexWrap: "nowrap" }}>
-            {!isMobile && (
-              <AppMenu
-                setShowSideBar={setShowSideBar}
-                showSideBar={showSideBar}
-              />
-            )}
-            <Content
-              style={{
-                marginInline: "auto",
-                justifyContent: "center",
-                display: "flex",
-                maxWidth: "1431px"
-              }}
-            >
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <HomePage
-                      isMobile={isMobile}
-                      events={eventsWithTags}
-                      onDelete={deleteTag}
-                      availableTags={tags}
-                    />
-                  }
+    <Analytics>
+      <ConfigProvider
+        theme={{
+          algorithm: theme.defaultAlgorithm
+        }}
+      >
+        <AntApp>
+          <Layout
+            style={{
+              background: "#FFFFFFFF",
+              margin: "auto",
+              marginBottom: "30%"
+            }}
+          >
+            <AppHeader
+              setShowSideBar={setShowSideBar}
+              showSideBar={showSideBar}
+            />
+            <Row gutter={5} style={{ flexWrap: "nowrap" }}>
+              {!isMobile && (
+                <AppMenu
+                  setShowSideBar={setShowSideBar}
+                  showSideBar={showSideBar}
                 />
-                <Route
-                  path="/view"
-                  element={
-                    <ViewAllPage
-                      events={eventsWithTags}
-                      availableTags={tags}
-                      onEdit={editTag}
-                      onDelete={deleteTag}
-                    />
-                  }
-                />
-                <Route
-                  path="/calendar"
-                  element={
-                    <CalendarPage
-                      isMobile={isMobile}
-                      events={eventsWithTags}
-                      onDelete={deleteTag}
-                      availableTags={tags}
-                    />
-                  }
-                />
-                <Route
-                  path="/new"
-                  element={
-                    <NewNote
-                      onSubmit={onCreateNote}
-                      onAddTag={addTag}
-                      availableTags={tags}
-                    />
-                  }
-                />
-                <Route path="*" element={<Navigate to="/" />} />
-                <Route
-                  path="/:id"
-                  element={<CEventsWithTags cEvents={eventsWithTags} />}
-                >
+              )}
+              <Content
+                style={{
+                  marginInline: "auto",
+                  justifyContent: "center",
+                  display: "flex",
+                  maxWidth: "1431px"
+                }}
+              >
+                <Routes>
                   <Route
-                    index
+                    path="/"
                     element={
-                      <Note isMobile={isMobile} onDelete={onDeleteNote} />
+                      <HomePage
+                        isMobile={isMobile}
+                        events={eventsWithTags}
+                        onDelete={deleteTag}
+                        availableTags={tags}
+                      />
                     }
                   />
                   <Route
-                    path="edit"
+                    path="/view"
                     element={
-                      <EditNote
-                        onSubmit={onEditNote}
+                      <ViewAllPage
+                        events={eventsWithTags}
+                        availableTags={tags}
+                        onEdit={editTag}
+                        onDelete={deleteTag}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/calendar"
+                    element={
+                      <CalendarPage
+                        isMobile={isMobile}
+                        events={eventsWithTags}
+                        onDelete={deleteTag}
+                        availableTags={tags}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/new"
+                    element={
+                      <NewNote
+                        onSubmit={onCreateNote}
                         onAddTag={addTag}
                         availableTags={tags}
                       />
                     }
                   />
-                </Route>
-              </Routes>
-            </Content>
-            {!isMobile && <div style={{ width: 256 }}></div>}
-          </Row>
-        </Layout>
-        {isMobile && (
-          <>
-            <div style={{ ...style }}></div>
-            <Link to={"/"}>
-              <FloatButton
-                style={{ right: 45 + 90 + 90 + 90 }}
-                icon={<HomeFilled />}
-              />
-            </Link>
-            <Link to={"/calendar"}>
-              <FloatButton
-                style={{ right: 45 + 90 + 90 }}
-                icon={<CalendarFilled />}
-              />
-            </Link>
-            <Link to={"/new"}>
-              <FloatButton style={{ right: 45 + 90 }} icon={<PlusOutlined />} />
-            </Link>
-            <Link to={"/view"}>
-              <FloatButton style={{ right: 45 }} icon={<ProductOutlined />} />
-            </Link>
-          </>
-        )}
-      </AntApp>
-    </ConfigProvider>
+                  <Route path="*" element={<Navigate to="/" />} />
+                  <Route
+                    path="/:id"
+                    element={<CEventsWithTags cEvents={eventsWithTags} />}
+                  >
+                    <Route
+                      index
+                      element={
+                        <Note isMobile={isMobile} onDelete={onDeleteNote} />
+                      }
+                    />
+                    <Route
+                      path="edit"
+                      element={
+                        <EditNote
+                          onSubmit={onEditNote}
+                          onAddTag={addTag}
+                          availableTags={tags}
+                        />
+                      }
+                    />
+                  </Route>
+                </Routes>
+              </Content>
+              {!isMobile && <div style={{ width: 256 }}></div>}
+            </Row>
+          </Layout>
+          {isMobile && (
+            <>
+              <div style={{ ...style }}></div>
+              <Link to={"/"}>
+                <FloatButton
+                  style={{ right: 45 + 90 + 90 + 90 }}
+                  icon={<HomeFilled />}
+                />
+              </Link>
+              <Link to={"/calendar"}>
+                <FloatButton
+                  style={{ right: 45 + 90 + 90 }}
+                  icon={<CalendarFilled />}
+                />
+              </Link>
+              <Link to={"/new"}>
+                <FloatButton
+                  style={{ right: 45 + 90 }}
+                  icon={<PlusOutlined />}
+                />
+              </Link>
+              <Link to={"/view"}>
+                <FloatButton style={{ right: 45 }} icon={<ProductOutlined />} />
+              </Link>
+            </>
+          )}
+        </AntApp>
+      </ConfigProvider>
+    </Analytics>
   );
 }
 
