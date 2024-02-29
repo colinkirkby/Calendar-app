@@ -130,7 +130,14 @@ export default function ThisMonth({
     const indexedEventsThisMonth = newEventsThisMonth.map((cEvent, index) => {
       let newRend = 0;
       for (var i = 0; i < index; i++) {
-        if (newEventsThisMonth[i].endDate.isAfter(cEvent.startDate)) {
+        if (
+          newEventsThisMonth[i].endDate
+            .startOf("day")
+            .isAfter(cEvent.startDate.startOf("day")) ||
+          newEventsThisMonth[i].endDate
+            .startOf("day")
+            .isSame(cEvent.startDate.startOf("day"))
+        ) {
           cEvent.renderIndex = newEventsThisMonth[i].renderIndex + 1;
         }
       }
