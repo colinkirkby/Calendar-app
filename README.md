@@ -1,19 +1,24 @@
 # Basic Calendar App
-Just a typoescript project to learn the language 
+
+![image](https://github.com/colinkirkby/Calendar-app/assets/78116947/ae598441-01e1-441a-b56a-dad6d313b6d8)
+
+
+![image](https://github.com/colinkirkby/Calendar-app/assets/78116947/385093fa-3841-46b4-9710-6c9f287cc92f)
+
+
 
 Goals: 
-- event creation system
-- event tagging system
+- google calender integration 
 - calendar with events attached
-- Maybe a notification system but nobody want's desktop notifications
-
-
-
-Other possible goals:
 - integrate an auth system
 - integrate individual user storage
 - integrate a db
 - host somewhere online 
+- allow calendar comparison functionality
+
+
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
