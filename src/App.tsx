@@ -166,7 +166,13 @@ function App() {
       }}
     >
       <AntApp>
-        <Layout style={{ background: "#FFFFFFFF", margin: "auto" }}>
+        <Layout
+          style={{
+            background: "#FFFFFFFF",
+            margin: "auto",
+            marginBottom: "30%"
+          }}
+        >
           <AppHeader
             setShowSideBar={setShowSideBar}
             showSideBar={showSideBar}

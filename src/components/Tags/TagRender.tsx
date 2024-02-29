@@ -69,9 +69,7 @@ export default function TagRender({ day, isMobile }: tagProps) {
             );
           } else {
             return (
-              <div
-                style={isMobile ? { height: "20.58px" } : { height: "24px" }}
-              />
+              <div style={isMobile ? { height: "20px" } : { height: "24px" }} />
             );
           }
         })}
@@ -98,7 +96,7 @@ function renderEvent(
       style={isMobile ? { height: 20 } : { height: 24 }}
     >
       {isMulti ? (
-        isStart ? (
+        isStart || isFirstDayOfWeek ? (
           //this is the opening part of a tag
           <Tag
             bordered={false}
@@ -112,6 +110,7 @@ function renderEvent(
                     textOverflow: "ellipsis"
                   }
                 : {
+                    overflow: "visible",
                     color: tagColor,
                     background: backgroundTagColor
                   }
