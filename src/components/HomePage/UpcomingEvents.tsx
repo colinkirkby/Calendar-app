@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 
 export default function UpcomingEvents({ events, genNew }: HomePageProps) {
   const [upcomingEvents, setUpcomingEvents] = useState<CEvent[]>([]);
+  const [gen, setGent] = useState<boolean>(false);
   const curr = dayjs();
   useEffect(() => {
     let tempEvents = events;
@@ -23,35 +24,36 @@ export default function UpcomingEvents({ events, genNew }: HomePageProps) {
         .slice(0, 5)
     );
     console.log(upcomingEvents);
-  }, events);
+  }, [events, gen]);
 
   return (
     <Col style={{ marginTop: "30px" }}>
       <h1>Upcoming Events</h1>
-      {upcomingEvents.length > 0 ? (
-        upcomingEvents.map(cEvent => {
-          return (
-            <div style={{ paddingTop: "5px" }}>
-              <EventCard
-                id={cEvent.id}
-                title={cEvent.title}
-                tags={cEvent.tags}
-                startDate={cEvent.startDate}
-                endDate={cEvent.endDate}
-              />
-            </div>
-          );
-        })
-      ) : (
-        <Button
-          onClick={() => {
-            genNew(30);
-          }}
-        >
-          {" "}
-          Generate Demo Events
-        </Button>
-      )}
+      {upcomingEvents.length > 0
+        ? upcomingEvents.map(cEvent => {
+            return (
+              <div style={{ paddingTop: "5px" }}>
+                <EventCard
+                  id={cEvent.id}
+                  title={cEvent.title}
+                  tags={cEvent.tags}
+                  startDate={cEvent.startDate}
+                  endDate={cEvent.endDate}
+                />
+              </div>
+            );
+          })
+        : !gen && (
+            <Button
+              onClick={() => {
+                genNew(30);
+                setGent(true);
+              }}
+            >
+              {" "}
+              Generate Demo Events
+            </Button>
+          )}
     </Col>
   );
 }
