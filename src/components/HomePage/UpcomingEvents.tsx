@@ -45,7 +45,7 @@ export default function UpcomingEvents({ events, genNew }: HomePageProps) {
       ) : (
         <Button
           onClick={() => {
-            genNew(10);
+            genNew(30);
           }}
         >
           {" "}
