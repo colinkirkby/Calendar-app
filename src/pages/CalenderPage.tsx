@@ -45,7 +45,12 @@ export default function CalendarPage({
             onClick={() => {
               setSelectedDate(selected.subtract(1, "month"));
             }}
-            style={{ marginLeft: "5px" }}
+            style={{
+              marginLeft: "5px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
             icon={
               <LeftOutlined
                 style={isMobile ? { fontSize: "100%" } : { fontSize: "200%" }}
@@ -74,7 +79,12 @@ export default function CalendarPage({
             onClick={() => {
               setSelectedDate(selected.add(1, "month"));
             }}
-            style={{ marginRight: "5px" }}
+            style={{
+              marginRight: "5px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
             icon={
               <RightOutlined
                 style={isMobile ? { fontSize: "100%" } : { fontSize: "200%" }}

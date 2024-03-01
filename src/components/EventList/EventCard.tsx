@@ -39,8 +39,7 @@ export function EventCard({
               className="text-truncate"
               style={{
                 background: tag.color + "32",
-                color: tag.color,
-                borderColor: tag.color
+                color: tag.color
               }}
             >
               {tag.label}

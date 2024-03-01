@@ -28,60 +28,64 @@ export default function Note({ onDelete, isMobile }: NoteProps) {
     <Content
       style={{ marginTop: "20px", margin: "auto", justifyContent: "center" }}
     >
-      <Row
-        className="allign-items-center mb-4"
-        justify={isMobile ? "center" : "space-between"}
-      >
-        <Col>
-          <h1>{note.title}</h1>
-          <Tag className="text-truncate" color="blue" bordered={false}>
-            {note.startDate.format("DD/MMMM/YYY").toString()}
-            {!note.startDate.isSame(note.endDate) && " - "}
-            {!note.startDate.isSame(note.endDate) &&
-              note.endDate.format("DD/MMMM/YYYY").toString()}
-          </Tag>
-          <Flex gap={1} className=" flex-wrap">
-            {" "}
-            {note.tags.map(tag => {
-              let backgroundTagColor = tag.color + "32";
-              return (
-                <Tag
-                  key={tag.id}
-                  className="text-truncate"
-                  bordered={false}
-                  style={{
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    color: tag.color,
-                    background: backgroundTagColor
-                  }}
-                >
-                  {tag.label}
-                </Tag>
-              );
-            })}
-          </Flex>
-          <Row style={{ marginTop: "30px" }}>
-            <ReactMarkDown>{note.body}</ReactMarkDown>
-          </Row>
-        </Col>
-        {!isMobile && (
-          <Col xs="auto">
-            <Flex gap={20} vertical>
-              <Link to="edit">
-                <Button type="primary">Edit</Button>
-              </Link>
-              <Link to={".."}>
-                <Button type="default">Back</Button>
-              </Link>
-
-              <Button danger onClick={() => setShowDelete(true)}>
-                Delete
-              </Button>
+      <Col>
+        <Row
+          className="allign-items-center mb-4"
+          justify={isMobile ? "center" : "space-between"}
+        >
+          <Col>
+            <h1>{note.title}</h1>
+            <Tag className="text-truncate" color="blue" bordered={false}>
+              {note.startDate.format("DD/MMMM/YYY").toString()}
+              {!note.startDate.isSame(note.endDate) && " - "}
+              {!note.startDate.isSame(note.endDate) &&
+                note.endDate.format("DD/MMMM/YYYY").toString()}
+            </Tag>
+            <Flex gap={1} className=" flex-wrap">
+              {" "}
+              {note.tags.map(tag => {
+                let backgroundTagColor = tag.color + "32";
+                return (
+                  <Tag
+                    key={tag.id}
+                    className="text-truncate"
+                    bordered={false}
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      color: tag.color,
+                      background: backgroundTagColor
+                    }}
+                  >
+                    {tag.label}
+                  </Tag>
+                );
+              })}
             </Flex>
+            <Row style={{ marginTop: "30px" }}>
+              <ReactMarkDown>{note.body}</ReactMarkDown>
+            </Row>
           </Col>
-        )}
-      </Row>
+        </Row>
+        <Row>
+          {!isMobile && (
+            <Row>
+              <Flex gap={20}>
+                <Link to="edit">
+                  <Button type="primary">Edit</Button>
+                </Link>
+                <Link to={".."}>
+                  <Button type="default">Back</Button>
+                </Link>
+
+                <Button danger onClick={() => setShowDelete(true)}>
+                  Delete
+                </Button>
+              </Flex>
+            </Row>
+          )}
+        </Row>
+      </Col>
       {isMobile && (
         <Row justify={"center"}>
           <Flex gap={20}>
@@ -107,26 +111,12 @@ export default function Note({ onDelete, isMobile }: NoteProps) {
       <Modal
         title="Delete Note"
         open={show}
-        onOk={handleClose}
+        onOk={handleDelete}
+        okButtonProps={{ danger: true }}
         onCancel={handleClose}
       >
         <Col className="mb-4 align-items-center justify-content-center">
-          <p>Are You Sure You Want To Delete This Note</p>
-          <Flex
-            gap={2}
-            className="mb-4 align-items-center justify-content-center"
-          >
-            <Button danger onClick={handleDelete}>
-              Delete
-            </Button>
-            <Button
-              onClick={() => {
-                handleClose();
-              }}
-            >
-              Cancel
-            </Button>
-          </Flex>
+          <p>Are You Sure You Want To Delete This Event</p>
         </Col>
       </Modal>
     );

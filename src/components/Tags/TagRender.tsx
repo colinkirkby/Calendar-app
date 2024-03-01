@@ -105,7 +105,7 @@ function renderEvent(
   return (
     <>
       {isMulti ? (
-        isStart || isFirstDayOfWeek || (isFirstDayOfMonth && !isWeekView) ? (
+        isStart ? (
           //this is the opening part of a tag
           <Link
             to={`/${cEvent.id}`}
@@ -138,7 +138,7 @@ function renderEvent(
               {cEvent.title}
             </Tag>
           </Link>
-        ) : isEnd || isLastDayOfWeek || (isLastDayOfMonth && !isWeekView) ? (
+        ) : isEnd ? (
           // this is the tag to render if it is the end
           <Link
             to={`/${cEvent.id}`}
@@ -154,7 +154,9 @@ function renderEvent(
                 background: backgroundTagColor
               }}
             >
-              {" .   "}
+              {isFirstDayOfWeek || (isFirstDayOfMonth && !isWeekView)
+                ? cEvent.title
+                : " .   "}
             </Tag>
           </Link>
         ) : (
@@ -173,7 +175,9 @@ function renderEvent(
                 background: backgroundTagColor
               }}
             >
-              {".      "}
+              {isFirstDayOfWeek || (isFirstDayOfMonth && !isWeekView)
+                ? cEvent.title
+                : " .   "}
             </Tag>
           </Link>
         )

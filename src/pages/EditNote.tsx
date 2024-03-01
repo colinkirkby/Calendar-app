@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import NoteForm from "../components/Forms/EventForm";
 import { EventData, Tag } from "../App";
 import { useEvent } from "../utilities/NotesWithTags";
+import { Col } from "antd";
+import { Content } from "antd/es/layout/layout";
 
 type EditNoteProps = {
   onSubmit: (id: string, data: EventData) => void;
@@ -16,7 +18,7 @@ export default function EditNote({
 }: EditNoteProps) {
   const cEvent = useEvent();
   return (
-    <>
+    <Content style={{ padding: "20px 48px" }}>
       <h1 className="mb-4"> Edit Event</h1>
       <NoteForm
         title={cEvent.title}
@@ -31,6 +33,6 @@ export default function EditNote({
         onAddTag={onAddTag}
         availableTags={availableTags}
       />
-    </>
+    </Content>
   );
 }
