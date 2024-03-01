@@ -1,4 +1,4 @@
-import { Col, Typography } from "antd";
+import { Button, Col, Typography } from "antd";
 import { HomePageProps } from "../../pages/HomePage";
 import { dateSort } from "../EventList/EventsList";
 import { useEffect, useState } from "react";
@@ -6,7 +6,7 @@ import { CEvent } from "../../App";
 import { EventCard } from "../EventList/EventCard";
 import dayjs from "dayjs";
 
-export default function UpcomingEvents({ events }: HomePageProps) {
+export default function UpcomingEvents({ events, genNew }: HomePageProps) {
   const [upcomingEvents, setUpcomingEvents] = useState<CEvent[]>([]);
   const curr = dayjs();
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function UpcomingEvents({ events }: HomePageProps) {
   return (
     <Col style={{ marginTop: "30px" }}>
       <h1>Upcoming Events</h1>
-      {upcomingEvents.length > 0 &&
+      {upcomingEvents.length > 0 ? (
         upcomingEvents.map(cEvent => {
           return (
             <div style={{ paddingTop: "5px" }}>
@@ -41,7 +41,17 @@ export default function UpcomingEvents({ events }: HomePageProps) {
               />
             </div>
           );
-        })}
+        })
+      ) : (
+        <Button
+          onClick={() => {
+            genNew(10);
+          }}
+        >
+          {" "}
+          Generate Demo Events
+        </Button>
+      )}
     </Col>
   );
 }

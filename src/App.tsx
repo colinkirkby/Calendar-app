@@ -110,23 +110,72 @@ var style: React.CSSProperties = {
 };
 
 function App() {
-  const [notes, setNotes] = useLocalStorageNotes<RawEvent[]>("NOTES", []);
+  const [cEvents, setCEvents] = useLocalStorageNotes<RawEvent[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
   const [showSideBar, setShowSideBar] = useState(false);
   const isMobile = window?.screen?.width < 600;
   const [data, setData] = React.useState<ThemeData>(defaultData);
 
+  function generateRandomEvents(numberOfEvents: number) {
+    const titles = [
+      "Awesome Event",
+      "Cool Gathering",
+      "Fun Times",
+      "Serious Meeting"
+    ];
+    const tags: Tag[] = [
+      { id: "1", color: "#FF5733", label: "Education" },
+      { id: "2", color: "#33FF57", label: "Fun" },
+      { id: "3", color: "#3357FF", label: "Work" }
+    ];
+    for (var tag of tags) {
+      addTag(tag);
+    }
+    const bodies = [
+      "This is going to be a great event!",
+      "Don't miss out on this!",
+      "Be there or be square!"
+    ];
+    const colors = ["#FF5733", "#33FF57", "#3357FF", "#F333FF"];
+
+    const events: EventData[] = [];
+
+    for (let i = 0; i < numberOfEvents; i++) {
+      const startDate = dayjs().add(Math.floor(Math.random() * 120), "day"); // Randomly in the next 4 months
+      const endDate = startDate.add(Math.floor(Math.random() * 3), "day"); // 0 to 2 days long event
+      const startTime = startDate.add(Math.floor(Math.random() * 8), "hour"); // Starts at a random time in the first day
+      const endTime = endDate.add(Math.floor(Math.random() * 8), "hour"); // Ends at a random time in the last day
+
+      events.push({
+        title: titles[Math.floor(Math.random() * titles.length)],
+        body: bodies[Math.floor(Math.random() * bodies.length)],
+        tags: [tags[Math.floor(Math.random() * tags.length)]], // Pick one random tag for simplicity
+        color: colors[Math.floor(Math.random() * colors.length)],
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        created: Date.now(),
+        isMulti: !startDate.isSame(endDate, "day"),
+        renderIndex: 0
+      });
+    }
+    for (var cEvent of events) {
+      onCreateCEvent(cEvent);
+    }
+  }
+
   const eventsWithTags = useMemo(() => {
-    return notes.map(note => {
+    return cEvents.map(note => {
       return {
         ...note,
         tags: tags.filter(tag => note.tagIds.includes(tag.id))
       };
     });
-  }, [notes, tags]);
+  }, [cEvents, tags]);
 
-  function onCreateNote({ tags, ...data }: EventData) {
-    setNotes(prevNotes => {
+  function onCreateCEvent({ tags, ...data }: EventData) {
+    setCEvents(prevNotes => {
       return [
         ...prevNotes,
         { ...data, id: uuidV4(), tagIds: tags.map(tag => tag.id) }
@@ -135,7 +184,7 @@ function App() {
   }
 
   function onEditNote(id: string, { tags, ...data }: EventData) {
-    setNotes(prevNotes => {
+    setCEvents(prevNotes => {
       return prevNotes.map(note => {
         return note.id === id
           ? { ...note, ...data, tagIds: tags.map(tag => tag.id) }
@@ -145,7 +194,7 @@ function App() {
   }
 
   function onDeleteNote(id: string) {
-    setNotes(prevNotes =>
+    setCEvents(prevNotes =>
       prevNotes.filter(note => {
         return note.id !== id;
       })
@@ -209,6 +258,7 @@ function App() {
                   path="/"
                   element={
                     <HomePage
+                      genNew={generateRandomEvents}
                       isMobile={isMobile}
                       events={eventsWithTags}
                       onDelete={deleteTag}
@@ -242,7 +292,7 @@ function App() {
                   path="/new"
                   element={
                     <NewNote
-                      onSubmit={onCreateNote}
+                      onSubmit={onCreateCEvent}
                       onAddTag={addTag}
                       availableTags={tags}
                     />
