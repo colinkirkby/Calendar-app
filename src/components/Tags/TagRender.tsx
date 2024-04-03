@@ -9,7 +9,7 @@ type tagProps = {
   isWeekView: boolean;
 };
 
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { CEvent } from "../../App";
 
 function mapEventsToRenderIndex(cEvents: CEvent[]): CEvent[][] {
@@ -108,7 +108,7 @@ function renderEvent(
         isStart ? (
           //this is the opening part of a tag
           <Link
-            to={`/${cEvent.id}`}
+            href={`/${cEvent.id}`}
             style={
               isMobile
                 ? { height: 22, marginTop: "-1px" }
@@ -141,7 +141,7 @@ function renderEvent(
         ) : isEnd ? (
           // this is the tag to render if it is the end
           <Link
-            to={`/${cEvent.id}`}
+            href={`/${cEvent.id}`}
             style={isMobile ? { height: 22 } : { height: 24 }}
           >
             <Tag
@@ -162,7 +162,7 @@ function renderEvent(
         ) : (
           //this is a middle tag
           <Link
-            to={`/${cEvent.id}`}
+            href={`/${cEvent.id}`}
             style={isMobile ? { height: 22 } : { height: 24 }}
           >
             <Tag
@@ -183,7 +183,7 @@ function renderEvent(
         )
       ) : (
         <Link
-          to={`/${cEvent.id}`}
+          href={`/${cEvent.id}`}
           style={isMobile ? { height: 22 } : { height: 24 }}
         >
           <Tag

@@ -1,15 +1,15 @@
 import React, { useState, useMemo, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import "./custom.scss";
+
 import { Routes, Route, Navigate, Link } from "react-router-dom";
-import NewNote from "./pages/NewEvent";
+import NewNote from "./pages/new";
 import {
   useLocalStorage,
   useLocalStorageNotes
 } from "./utilities/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/dashboard";
 import {
   Col,
   Layout,
@@ -25,7 +25,7 @@ import Note from "./pages/Note";
 import EditNote from "./pages/EditNote";
 import AppHeader from "./components/Header/AppHeader";
 import AppMenu from "./components/Menus/AppMenu";
-import ViewAllPage from "./pages/ViewAllPage";
+import ViewAllPage from "./pages/view";
 import CalendarPage from "./pages/CalenderPage";
 import dayjs from "dayjs";
 import { App as AntApp } from "antd";

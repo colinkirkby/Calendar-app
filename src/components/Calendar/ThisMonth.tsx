@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { HomePageProps } from "../../pages/HomePage";
+import { HomePageProps } from "../../pages/dashboard";
 import { CEvent, Tag as aTag } from "../../App";
 import EventsList, { dateSort } from "../EventList/EventsList";
 import dayjs from "dayjs";

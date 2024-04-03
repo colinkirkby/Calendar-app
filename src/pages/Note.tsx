@@ -1,6 +1,6 @@
 import { Tag, Button, Col, Modal, Row, Flex } from "antd";
 import { useEvent } from "../utilities/NotesWithTags";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import Link from "next/link";
 import ReactMarkDown from "react-markdown";
 import { useState } from "react";
 import ColumnGroup from "antd/es/table/ColumnGroup";
@@ -15,13 +15,13 @@ type ModalProps = {
 };
 
 export default function Note({ onDelete, isMobile }: NoteProps) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const note = useEvent();
   const [showDelete, setShowDelete] = useState(false);
 
   function handleDelete() {
     onDelete(note.id);
-    navigate("/view");
+    //navigate("/view");
   }
 
   return (
@@ -71,10 +71,10 @@ export default function Note({ onDelete, isMobile }: NoteProps) {
           {!isMobile && (
             <Row>
               <Flex gap={20}>
-                <Link to="edit">
+                <Link href="edit">
                   <Button type="primary">Edit</Button>
                 </Link>
-                <Link to={".."}>
+                <Link href={".."}>
                   <Button type="default">Back</Button>
                 </Link>
 
@@ -89,10 +89,10 @@ export default function Note({ onDelete, isMobile }: NoteProps) {
       {isMobile && (
         <Row justify={"center"}>
           <Flex gap={20}>
-            <Link to="edit">
+            <Link href="edit">
               <Button type="primary">Edit</Button>
             </Link>
-            <Link to={".."}>
+            <Link href={".."}>
               <Button type="default">Back</Button>
             </Link>
 

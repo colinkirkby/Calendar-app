@@ -2,7 +2,7 @@ import { Flex, Layout, Row, Button, Image } from "antd";
 import { BsMenuButtonWide } from "react-icons/bs";
 import styles from "./AppHeader.module.css";
 import { Header } from "antd/es/layout/layout";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { HomeFilled, HomeOutlined } from "@ant-design/icons";
 import Icon from "@ant-design/icons/lib/components/Icon";
 

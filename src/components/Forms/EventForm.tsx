@@ -1,7 +1,8 @@
 import { Button, Col, Form, Row, Flex, Input, Layout, TimePicker } from "antd";
 import CreatableReactSelect from "react-select/creatable";
 import { DatePicker } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+
 import { FormEvent, useRef, useState, useCallback, useEffect } from "react";
 import { EventData, Tag } from "../../App";
 import { v4 as uuidV4 } from "uuid";
@@ -57,7 +58,7 @@ export default function NoteForm({
     setEndTime(value);
   }, []);
   const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [form] = Form.useForm();
   function handleSubmit(values: FieldType) {
     onSubmit({
@@ -73,7 +74,7 @@ export default function NoteForm({
       isMulti: !newStartDate.isSame(newEndDate),
       renderIndex: 0
     });
-    navigate("..");
+    //navigate("..");
   }
   const onReset = () => {
     form.resetFields();
@@ -201,7 +202,7 @@ export default function NoteForm({
             <Button htmlType="submit" type="primary">
               Save
             </Button>
-            <Link to={".."}>
+            <Link href={".."}>
               <Button type="default">cancel</Button>
             </Link>
             <Button

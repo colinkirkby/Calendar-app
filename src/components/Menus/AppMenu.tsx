@@ -1,7 +1,7 @@
 import { Menu } from "antd";
 import MenuItem from "antd/es/menu/MenuItem";
 import { BsMenuButton, BsCalendar, BsPencil } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import type { MenuProps } from "antd";
 import {
   AppstoreOutlined,
@@ -44,14 +44,14 @@ export default function AppMenu({ showSideBar, setShowSideBar }: MenuValProps) {
   }
   const items: MenuItem[] = [
     getItem(
-      <Link style={{ textDecoration: "none" }} to="/">
+      <Link style={{ textDecoration: "none" }} href="/">
         Home
       </Link>,
       "1",
       <HomeOutlined />
     ),
     getItem(
-      <Link style={{ textDecoration: "none" }} to="/calendar">
+      <Link style={{ textDecoration: "none" }} href="/calendar">
         Calendar
       </Link>,
       "2",
@@ -59,14 +59,14 @@ export default function AppMenu({ showSideBar, setShowSideBar }: MenuValProps) {
     ),
     getItem("Events", "sub1", <MailFilled />, [
       getItem(
-        <Link style={{ textDecoration: "none" }} to="/view">
+        <Link style={{ textDecoration: "none" }} href="/view">
           View All
         </Link>,
         "3",
         <ProductOutlined />
       ),
       getItem(
-        <Link style={{ textDecoration: "none" }} to="/new">
+        <Link style={{ textDecoration: "none" }} href="/new">
           New Event
         </Link>,
         "4",

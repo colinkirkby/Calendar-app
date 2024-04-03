@@ -1,8 +1,8 @@
 import { CEvent, Tag } from "../App";
-import { Navigate, useNavigate, Link } from "react-router-dom";
 import EventsList from "../components/EventList/EventsList";
 import { FormEvent, useState } from "react";
 import Layout from "antd/es/layout";
+import Link from "next/link";
 import { Content } from "antd/es/layout/layout";
 import { Row, Col, Button } from "antd";
 import { EditTagsModel } from "../components/Tags/EditTagsModel";
@@ -38,7 +38,7 @@ export default function ViewAllPage({
           <h1>Events</h1>
         </Col>
         <Col>
-          <Link to="/new">
+          <Link href="/new">
             <Button type="primary">New Event</Button>
           </Link>
         </Col>

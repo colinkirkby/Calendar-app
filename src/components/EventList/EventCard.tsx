@@ -1,6 +1,6 @@
 import { Stack } from "react-bootstrap";
 import Card from "antd/es/card/Card";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+
 import styles from "./NotesListCards.module.css";
 import { SimplifiedNote } from "./EventsList";
 import { Flex, Badge, Button, Tag } from "antd";
@@ -12,14 +12,14 @@ export function EventCard({
   startDate,
   endDate
 }: SimplifiedNote) {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   return (
     <Card
       style={{ width: 300, height: 200 }}
       title={title}
       hoverable
       onClick={() => {
-        navigate(`/${id}`);
+        //navigate(`/${id}`);
       }}
       extra={
         <Tag className="text-truncate" color="blue" bordered={false}>
