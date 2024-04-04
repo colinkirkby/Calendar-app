@@ -24,7 +24,7 @@ import CEventsWithTags from "../utilities/NotesWithTags";
 import Note from "../oldPages/Note";
 import EditNote from "../oldPages/EditNote";
 import AppHeader from "../components/Header/AppHeader";
-import AppMenu from "../components/Menus/AppMenu";
+import AppMenu from "../oldComponents/Menus/AppMenu";
 import ViewAllPage from "../oldPages/ViewAllPage";
 import CalendarPage from "../oldPages/CalenderPage";
 import dayjs from "dayjs";

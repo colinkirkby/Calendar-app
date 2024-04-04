@@ -1,6 +1,6 @@
 import { Flex } from "antd";
-import ThisWeek from "../components/HomePage/ThisWeek";
-import UpcomingEvents from "../components/HomePage/UpcomingEvents";
+import ThisWeek from "../oldComponents/HomePage/ThisWeek";
+import UpcomingEvents from "../oldComponents/HomePage/UpcomingEvents";
 import { CEvent, Tag } from "./App";
 export type HomePageProps = {
   onDelete: (id: string) => void;

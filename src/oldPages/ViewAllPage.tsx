@@ -1,11 +1,11 @@
 import { CEvent, Tag } from "./App";
-import EventsList from "../components/EventList/EventsList";
+import EventsList from "../oldComponents/EventList/EventsList";
 import { FormEvent, useState } from "react";
 import Layout from "antd/es/layout";
 import Link from "next/link";
 import { Content } from "antd/es/layout/layout";
 import { Row, Col, Button } from "antd";
-import { EditTagsModel } from "../components/Tags/EditTagsModel";
+import { EditTagsModel } from "../oldComponents/Tags/EditTagsModel";
 
 type ViewPageProps = {
   events: CEvent[];
