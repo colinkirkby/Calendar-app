@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-import { Routes, Route, Navigate, Link } from "react-router-dom";
+//import { Routes, Route, Navigate, Link } from "react-router-dom";
 import NewNote from "./new";
 import {
   useLocalStorage,
@@ -248,6 +248,7 @@ function App() {
                 maxWidth: "1431px"
               }}
             >
+              {/** 
               <Routes>
                 <Route
                   path="/"
@@ -316,11 +317,12 @@ function App() {
                   />
                 </Route>
               </Routes>
+                  */}
             </Content>
             {!isMobile && <div style={{ width: 256 }}></div>}
           </Row>
         </Layout>
-        {isMobile && (
+        {/**isMobile && (
           <>
             <div style={{ ...style }}></div>
             <Link to={"/"}>
@@ -342,7 +344,7 @@ function App() {
               <FloatButton style={{ right: 45 }} icon={<ProductOutlined />} />
             </Link>
           </>
-        )}
+        )*/}
       </AntApp>
     </ConfigProvider>
   );
