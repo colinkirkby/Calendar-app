@@ -6,7 +6,7 @@ import comm from "../../public/landingAssets/comm.webp";
 
 import LandingHeader from "src/components/Header/LandingHeader";
 import { Content } from "antd/es/layout/layout";
-import AppMenu from "src/oldComponents/Menus/AppMenu";
+
 import { useEffect, useState } from "react";
 import BannerRow, { BannerCard } from "src/components/LandingPage/BannerRow";
 
