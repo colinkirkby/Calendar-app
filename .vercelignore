@@ -1,2 +1,7 @@
 src/oldPages/
-src/components/
+src/components/Calender
+src/components/EventList
+src/components/Forms
+src/components/HomePage
+src/components/Menus
+src/components/Tags
