@@ -1,5 +1,5 @@
 //import { Navigate, Outlet, useOutletContext, useParams } from "react-router";
-import { CEvent } from "../oldPages/App";
+import { CEvent } from "../../oldPages/App";
 
 type NoteLayoutProps = {
   cEvents: CEvent[];

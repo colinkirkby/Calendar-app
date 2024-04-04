@@ -1,5 +1,5 @@
 import { Tag, Button, Col, Modal, Row, Flex } from "antd";
-import { useEvent } from "../utilities/NotesWithTags";
+import { useEvent } from "../oldComponents/utilities/NotesWithTags";
 import Link from "next/link";
 import ReactMarkDown from "react-markdown";
 import { useState } from "react";

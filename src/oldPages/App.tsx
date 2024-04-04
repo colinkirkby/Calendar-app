@@ -7,7 +7,7 @@ import NewNote from "./new";
 import {
   useLocalStorage,
   useLocalStorageNotes
-} from "../utilities/useLocalStorage";
+} from "../oldComponents/utilities/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 import HomePage from "../oldPages/dashboard";
 import {
@@ -20,7 +20,7 @@ import {
   theme,
   FloatButton
 } from "antd";
-import CEventsWithTags from "../utilities/NotesWithTags";
+import CEventsWithTags from "../oldComponents/utilities/NotesWithTags";
 import Note from "../oldPages/Note";
 import EditNote from "../oldPages/EditNote";
 import AppHeader from "../components/Header/AppHeader";

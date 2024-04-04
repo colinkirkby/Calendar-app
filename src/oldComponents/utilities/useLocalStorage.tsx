@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { RawEvent } from "../oldPages/App";
+import { RawEvent } from "../../oldPages/App";
 import dayjs from "dayjs";
 
 export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
