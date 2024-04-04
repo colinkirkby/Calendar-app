@@ -25,7 +25,7 @@ import Note from "./pages/Note";
 import EditNote from "./pages/EditNote";
 import AppHeader from "./components/Header/AppHeader";
 import AppMenu from "./components/Menus/AppMenu";
-import ViewAllPage from "./pages/view";
+import ViewAllPage from "./pages/ViewAllPage";
 import CalendarPage from "./pages/CalenderPage";
 import dayjs from "dayjs";
 import { App as AntApp } from "antd";
@@ -239,12 +239,7 @@ function App() {
             showSideBar={showSideBar}
           />
           <Row gutter={5} style={{ flexWrap: "nowrap" }}>
-            {!isMobile && (
-              <AppMenu
-                setShowSideBar={setShowSideBar}
-                showSideBar={showSideBar}
-              />
-            )}
+            {!isMobile && <AppMenu />}
             <Content
               style={{
                 marginInline: "auto",

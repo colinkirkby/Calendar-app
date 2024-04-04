@@ -24,7 +24,7 @@ type MenuValProps = {
   setShowSideBar: (value: boolean) => void;
 };
 
-export default function AppMenu({ showSideBar, setShowSideBar }: MenuValProps) {
+export default function AppMenu() {
   type MenuItem = Required<MenuProps>["items"][number];
 
   function getItem(
