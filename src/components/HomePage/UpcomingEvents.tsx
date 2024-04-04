@@ -1,5 +1,5 @@
 import { Button, Col, Typography } from "antd";
-import { HomePageProps } from "../../pages/dashboard";
+import { HomePageProps } from "../../oldPages/dashboard";
 import { dateSort } from "../EventList/EventsList";
 import { useEffect, useState } from "react";
 import { CEvent } from "../../App";

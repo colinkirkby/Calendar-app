@@ -1,5 +1,5 @@
 import { Row, Flex, Button, Modal, Input, Form, ColorPicker } from "antd";
-import { ModalProps } from "../../pages/ViewAllPage";
+import { ModalProps } from "../../oldPages/ViewAllPage";
 
 export function EditTagsModel({
   show,

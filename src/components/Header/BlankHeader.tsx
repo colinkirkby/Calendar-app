@@ -18,7 +18,7 @@ const headerStyle: React.CSSProperties = {
   padding: 10
 };
 
-export default function LandingHeader() {
+export default function BlankHeader() {
   return (
     <Layout>
       <Header style={headerStyle}>
@@ -33,29 +33,24 @@ export default function LandingHeader() {
             paddingRight: "40px"
           }}
         >
-          <Flex
-            gap="middle"
-            align="start"
-            style={{ justifyContent: "center", alignItems: "center" }}
-          >
-            <Image
-              preview={false}
-              width={100}
-              height={100}
-              src="/iconShadow.png"
-            ></Image>
-            <span>
-              <h1 style={{ fontSize: "40px" }}>StreamLine</h1>
-            </span>
-          </Flex>
-          <Row>
-            <Link href="join" style={{ marginRight: "20px" }}>
-              <Button type="default">Start Using Streamline</Button>
-            </Link>
-            <Link href="signin">
-              <Button type="primary">Sign In</Button>
-            </Link>
-          </Row>
+          <Link href={"/"}>
+            <Flex
+              gap="middle"
+              align="start"
+              style={{ justifyContent: "center", alignItems: "center" }}
+            >
+              <Image
+                preview={false}
+                width={100}
+                height={100}
+                src="/iconShadow.png"
+              ></Image>
+
+              <span>
+                <h1 style={{ fontSize: "40px" }}>StreamLine</h1>
+              </span>
+            </Flex>
+          </Link>
         </Flex>
       </Header>
     </Layout>
