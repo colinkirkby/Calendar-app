@@ -2,7 +2,7 @@ import { Button, Col, Typography } from "antd";
 import { HomePageProps } from "../../oldPages/dashboard";
 import { dateSort } from "../EventList/EventsList";
 import { useEffect, useState } from "react";
-import { CEvent } from "../../App";
+import { CEvent } from "../../oldPages/App";
 import { EventCard } from "../EventList/EventCard";
 import dayjs from "dayjs";
 

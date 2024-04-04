@@ -1,4 +1,4 @@
-import { CEvent, Tag } from "../App";
+import { CEvent, Tag } from "./App";
 import EventsList from "../components/EventList/EventsList";
 import { FormEvent, useState } from "react";
 import Layout from "antd/es/layout";

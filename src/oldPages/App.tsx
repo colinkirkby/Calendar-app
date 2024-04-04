@@ -1,15 +1,15 @@
-/**import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
 import { Routes, Route, Navigate, Link } from "react-router-dom";
-import NewNote from "./oldPages/new";
+import NewNote from "./new";
 import {
   useLocalStorage,
   useLocalStorageNotes
-} from "./utilities/useLocalStorage";
+} from "../utilities/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
-import HomePage from "./oldPages/dashboard";
+import HomePage from "../oldPages/dashboard";
 import {
   Col,
   Layout,
@@ -20,13 +20,13 @@ import {
   theme,
   FloatButton
 } from "antd";
-import CEventsWithTags from "./utilities/NotesWithTags";
-import Note from "./oldPages/Note";
-import EditNote from "./oldPages/EditNote";
-import AppHeader from "./components/Header/AppHeader";
-import AppMenu from "./components/Menus/AppMenu";
-import ViewAllPage from "./oldPages/ViewAllPage";
-import CalendarPage from "./oldPages/CalenderPage";
+import CEventsWithTags from "../utilities/NotesWithTags";
+import Note from "../oldPages/Note";
+import EditNote from "../oldPages/EditNote";
+import AppHeader from "../components/Header/AppHeader";
+import AppMenu from "../components/Menus/AppMenu";
+import ViewAllPage from "../oldPages/ViewAllPage";
+import CalendarPage from "../oldPages/CalenderPage";
 import dayjs from "dayjs";
 import { App as AntApp } from "antd";
 import { Content } from "antd/es/layout/layout";
@@ -348,4 +348,4 @@ function App() {
   );
 }
 
-export default App;*/
+export default App;

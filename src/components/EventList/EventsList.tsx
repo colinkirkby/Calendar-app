@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import ReactSelect, { SingleValue } from "react-select";
 import Select from "react-select";
-import { CEvent, Tag } from "../../App";
+import { CEvent, Tag } from "../../oldPages/App";
 import { isValidDateValue } from "@testing-library/user-event/dist/utils";
 import { EventCard } from "./EventCard";
 import { Layout, Form, Row, Col, Input, Space, Flex } from "antd";

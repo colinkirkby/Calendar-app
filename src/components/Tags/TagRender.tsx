@@ -10,7 +10,7 @@ type tagProps = {
 };
 
 import Link from "next/link";
-import { CEvent } from "../../App";
+import { CEvent } from "../../oldPages/App";
 
 function mapEventsToRenderIndex(cEvents: CEvent[]): CEvent[][] {
   // Initialize the array with null values or empty arrays depending on how you want to handle multiple events per index

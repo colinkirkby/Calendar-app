@@ -4,7 +4,7 @@ import { DatePicker } from "antd";
 import Link from "next/link";
 
 import { FormEvent, useRef, useState, useCallback, useEffect } from "react";
-import { EventData, Tag } from "../../App";
+import { EventData, Tag } from "../../oldPages/App";
 import { v4 as uuidV4 } from "uuid";
 import styles from "./EventsListCards.module.css";
 import dayjs from "dayjs";

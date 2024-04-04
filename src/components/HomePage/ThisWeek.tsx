@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { HomePageProps } from "../../oldPages/dashboard";
-import { CEvent } from "../../App";
+import { CEvent } from "../../oldPages/App";
 import EventsList, { dateSort } from "../EventList/EventsList";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
