@@ -1,34 +1,38 @@
-import { Button, Card, Form, Flex, DatePicker, Col, Row } from "antd";
-import { Content } from "antd/es/layout/layout";
-import { useCallback, useState } from "react";
-import dayjs from "dayjs";
-import ThisMonth from "../components/Calendar/ThisMonth";
-import { CEvent, Tag } from "../App";
-import { RangePickerProps } from "antd/es/date-picker";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { Button, Card, Form, Flex, DatePicker, Col, Row } from "antd"
+import { Content } from "antd/es/layout/layout"
+import { Dispatch, SetStateAction, useCallback, useState } from "react"
+import dayjs from "dayjs"
+import ThisMonth from "../components/Calendar/ThisMonth"
+import { CEvent, Tag } from "../App"
+import { RangePickerProps } from "antd/es/date-picker"
+import { LeftOutlined, RightOutlined } from "@ant-design/icons"
 
 export type CalendarPageProps = {
-  isMobile: boolean;
-  onDelete: (id: string) => void;
-  events: CEvent[];
-  availableTags: Tag[];
-};
+  isMobile: boolean
+  onDelete: (id: string) => void
+  events: CEvent[]
+  availableTags: Tag[]
+  setShowModal: Dispatch<SetStateAction<boolean>>
+  setActiveEvent: Dispatch<SetStateAction<CEvent | null>>
+}
 export default function CalendarPage({
   onDelete,
   events,
   availableTags,
-  isMobile
+  isMobile,
+  setShowModal,
+  setActiveEvent
 }: CalendarPageProps) {
-  const currentDate = dayjs();
+  const currentDate = dayjs()
 
-  const [selected, setSelectedDate] = useState<dayjs.Dayjs>(currentDate);
+  const [selected, setSelectedDate] = useState<dayjs.Dayjs>(currentDate)
 
   const onDateChange = useCallback((value: dayjs.Dayjs) => {
-    value && setSelectedDate(value);
-  }, []);
+    value && setSelectedDate(value)
+  }, [])
 
   return (
-    <Content style={{ margin: "auto", marginBottom: "20%" }}>
+    <Content style={{ margin: "auto", marginBottom: "2%" }}>
       <Col>
         <Row
           align={"middle"}
@@ -43,7 +47,7 @@ export default function CalendarPage({
             size="large"
             type="primary"
             onClick={() => {
-              setSelectedDate(selected.subtract(1, "month"));
+              setSelectedDate(selected.subtract(1, "month"))
             }}
             style={{
               marginLeft: "5px",
@@ -77,7 +81,7 @@ export default function CalendarPage({
             size="large"
             type="primary"
             onClick={() => {
-              setSelectedDate(selected.add(1, "month"));
+              setSelectedDate(selected.add(1, "month"))
             }}
             style={{
               marginRight: "5px",
@@ -101,6 +105,8 @@ export default function CalendarPage({
           justify={"center"}
         >
           <ThisMonth
+            setActiveEvent={setActiveEvent}
+            setShowModal={setShowModal}
             isMobile={isMobile}
             events={events}
             onDelete={onDelete}
@@ -110,5 +116,5 @@ export default function CalendarPage({
         </Row>
       </Col>
     </Content>
-  );
+  )
 }

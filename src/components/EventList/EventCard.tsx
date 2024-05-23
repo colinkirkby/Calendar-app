@@ -1,9 +1,9 @@
-import { Stack } from "react-bootstrap";
-import Card from "antd/es/card/Card";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import styles from "./NotesListCards.module.css";
-import { SimplifiedNote } from "./EventsList";
-import { Flex, Badge, Button, Tag } from "antd";
+import { Stack } from "react-bootstrap"
+import Card from "antd/es/card/Card"
+import { Link, Navigate, useNavigate } from "react-router-dom"
+import styles from "./NotesListCards.module.css"
+import { SimplifiedNote } from "./EventsList"
+import { Flex, Badge, Button, Tag } from "antd"
 
 export function EventCard({
   id,
@@ -12,14 +12,14 @@ export function EventCard({
   startDate,
   endDate
 }: SimplifiedNote) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <Card
-      style={{ width: 300, height: 200 }}
+      style={{ width: 250, height: 150 }}
       title={title}
       hoverable
       onClick={() => {
-        navigate(`/${id}`);
+        navigate(`/${id}`)
       }}
       extra={
         <Tag className="text-truncate" color="blue" bordered={false}>
@@ -33,20 +33,24 @@ export function EventCard({
         <Flex gap="small" wrap="wrap">
           {" "}
           {tags.map(tag => (
-            <Tag
-              bordered={false}
+            <div
               key={tag.id}
               className="text-truncate"
               style={{
-                background: tag.color + "32",
-                color: tag.color
+                paddingInline: "5px",
+                textAlign: "center",
+                minWidth: "50px",
+                background: `linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(0, 0, 0, 0.0) 110%), ${tag.color}`,
+                color: "#ffff",
+                borderRadius: "10px",
+                fontSize: "smaller"
               }}
             >
               {tag.label}
-            </Tag>
+            </div>
           ))}
         </Flex>
       )}
     </Card>
-  );
+  )
 }
