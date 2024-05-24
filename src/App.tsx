@@ -270,18 +270,33 @@ function App() {
           />
           <div>
             <div
-              style={{
-                marginInline: "auto",
+              style={
+                isMobile
+                  ? {
+                      marginInline: "auto",
 
-                justifyContent: "center",
-                display: "flex",
-                maxWidth: "1431px",
-                padding: "10px",
-                boxShadow: "2px 4px 20px 0 rgba(0,0,0,0.1)",
-                borderBottomLeftRadius: "40px",
-                borderBottomRightRadius: "40px",
-                paddingBottom: "10px"
-              }}
+                      justifyContent: "center",
+                      display: "flex",
+                      maxWidth: "1431px",
+                      padding: "10px",
+                      boxShadow: "2px 4px 20px 0 rgba(0,0,0,0.1)",
+                      borderBottomLeftRadius: "40px",
+                      borderBottomRightRadius: "40px",
+                      paddingBottom: "80px"
+                    }
+                  : {
+                      marginInline: "auto",
+
+                      justifyContent: "center",
+                      display: "flex",
+                      maxWidth: "1431px",
+                      padding: "10px",
+                      boxShadow: "2px 4px 20px 0 rgba(0,0,0,0.1)",
+                      borderBottomLeftRadius: "40px",
+                      borderBottomRightRadius: "40px",
+                      paddingBottom: "10px"
+                    }
+              }
             >
               <Routes>
                 <Route
