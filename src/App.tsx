@@ -382,9 +382,10 @@ function App() {
                 width: "100%",
                 backgroundColor: "#ffff",
                 color: "white",
-                height: "8vh",
+                height: "9vh",
                 textAlign: "center",
-                padding: "10px 0"
+                padding: "18px ",
+                boxShadow: "0 -4px 5px 0 rgba(0,0,0,0.0.5)"
               }}
             >
               <div
