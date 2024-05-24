@@ -294,7 +294,7 @@ function App() {
                       boxShadow: "2px 4px 20px 0 rgba(0,0,0,0.1)",
                       borderBottomLeftRadius: "40px",
                       borderBottomRightRadius: "40px",
-                      paddingBottom: "10px"
+                      paddingBottom: "40px"
                     }
               }
             >
