@@ -98,7 +98,7 @@ export default function ThisWeek({
     setWeekArray(newWeekArray)
   }, [events])
   return (
-    <Col style={{ marginTop: "30px" }}>
+    <Col style={{ marginTop: "10px" }}>
       <h1>This Week</h1>
       <Row gutter={16}>
         {weekArray.map(day => {

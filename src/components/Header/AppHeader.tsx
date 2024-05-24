@@ -5,14 +5,15 @@ import { Header } from "antd/es/layout/layout"
 import { Link } from "react-router-dom"
 import { HomeFilled, HomeOutlined } from "@ant-design/icons"
 import Icon from "@ant-design/icons/lib/components/Icon"
+import { useState } from "react"
 
 const headerStyle: React.CSSProperties = {
   textAlign: "center",
   color: "#fff",
-  height: 75,
+  height: 68,
   paddingInline: 18,
-  lineHeight: "64px",
-  backgroundColor: "#4096ff",
+  background: `linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.0) 110%), #4096ff`,
+  boxShadow: "0 4px 5px 0 rgba(0,0,0,0.15)",
   display: "flex",
   alignItems: "center"
 }
@@ -27,6 +28,7 @@ export default function AppHeader({
   showSideBar,
   setShowSideBar
 }: HeaderProps) {
+  const [activeIndex, setActiveIndex] = useState(0)
   return (
     <div style={headerStyle}>
       <div
@@ -54,49 +56,84 @@ export default function AppHeader({
           <div
             style={{
               display: "flex",
+              flexDirection: "column",
               marginLeft: "80px",
-              justifyContent: "end",
-              gap: "80px",
-              paddingTop: "20px",
-              color: "#ffff"
+              marginTop: "42px"
             }}
           >
-            <Link
+            <div
               style={{
-                textDecoration: "none",
+                display: "flex",
+                flexDirection: "row",
+                marginLeft: "80px",
+                justifyContent: "end",
+                gap: "80px",
+
                 color: "#ffff"
               }}
-              to="/"
             >
-              Home
-            </Link>
-            <Link
-              style={{
-                textDecoration: "none",
-                color: "#ffff"
-              }}
-              to="/calendar"
-            >
-              Calendar
-            </Link>
-            <Link
-              style={{
-                textDecoration: "none",
-                color: "#ffff"
-              }}
-              to="/view"
-            >
-              Events
-            </Link>
-            <Link
-              style={{
-                textDecoration: "none",
-                color: "#ffff"
-              }}
-              to="/new"
-            >
-              New Event
-            </Link>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  color: "#ffff"
+                }}
+                to="/"
+                onClick={() => {
+                  setActiveIndex(-7)
+                }}
+              >
+                Home
+              </Link>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  color: "#ffff"
+                }}
+                to="/calendar"
+                onClick={() => {
+                  setActiveIndex(92)
+                }}
+              >
+                Calendar
+              </Link>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  color: "#ffff"
+                }}
+                to="/view"
+                onClick={() => {
+                  setActiveIndex(190)
+                }}
+              >
+                Events
+              </Link>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  color: "#ffff"
+                }}
+                to="/new"
+                onClick={() => {
+                  setActiveIndex(290)
+                }}
+              >
+                New Event
+              </Link>
+            </div>
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "40px" }} />
+              <div
+                style={{
+                  width: "25%",
+                  backgroundColor: "#ffff",
+                  height: "4px",
+                  borderRadius: "2px",
+                  transition: "transform .7s ease-in-out ",
+                  transform: `translateY(0%) translateX(${activeIndex}%)`
+                }}
+              ></div>
+            </div>
           </div>
         )}
       </div>
